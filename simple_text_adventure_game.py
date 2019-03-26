@@ -1,21 +1,17 @@
-# import sleep to show output for some time period 
+# freez program for specified time
 from time import sleep 
 
-# import system to run any shell cmdlet
+# run shell cmdlet
 from os import system
 
-# import platform to get an OS name
+# get an OS name
 import platform
 
-# import webbrowser to open URL
+# open URL in browser
 import webbrowser
 
-# import exit to quit the function
+# quit the function
 from sys import exit
-
-# True if user hasn't visited any room yet
-# first_choice = True
-
 
 
 # clear IDLE window
@@ -29,21 +25,17 @@ def clear():
     else: 
         system('clear') 
 
-# open URL
 def open_URL():
 
-    # open URLs in default browser
+    # open URL in default browser
     webbrowser.open(strURL_bu, new=1)
     sleep(3*time)
     webbrowser.open(strURL_sense_fear, new=1)
     sleep(3*time)
 
-# begin the conversation
-def game_instroduction():
+def begin_a_game():
 
-    # start a conversion
     clear()
-
     input(f"Hi there {system_name} user.\n> ")
     sleep(time)
     clear()
@@ -85,7 +77,6 @@ def game_instroduction():
     print("Bu.")
     sleep(time)
 
-    # open URLs in default browser
     open_URL()
     
     clear()
@@ -96,110 +87,69 @@ def game_instroduction():
     print("Imagine you're in a dark room with 3 doors.\n")
     sleep(2*time)
 
-# main game function
 def main_game():
 
     # ask for a door number
     door_picked = pick_the_door()
-    # ask whether to knock the door or not
+
+    # ask whether to knock or not
     knock = ask_to_knock()
 
-    # user wants to knock the door
-    if knock == True:
-        # knock the door
+    # user wants to knock
+    if knock:
         knock_the_door(door_picked)
 
-    # user want don't want to knock the door
-    elif knock == False:
-        # open the door
-        open_the_door(door_picked)
-
+    # user want don't want to knock
     else:
-        print("main_game knock value error")
-        exit()
+        open_the_door(door_picked)
 
 # ask a user for a door number
 def pick_the_door():
 
-    print("Which door do you choose?")
+    global first_choice
+    print("Which door do you choose?\n> ")
+
+    if first_choice == True:
+        sleep(time/2)
+        print("WAIT!")
+        sleep(time)
+        print("Pick wisely...\n> ")
+        sleep(time)
+        first_choice = False
     
-    # OUT OF USE
-    # if it's a first room to visit
-    #if first_choice == True:
-        #sleep(time)
-        #print("WAIT!")
-        #sleep(time)
-        #print("Pick wisely...\n> ")
-        #sleep(time)
+    bad_pick = True
+    while(bad_pick):
+        try:
+            door_picked = int(input())
+            if door_picked in range(1, 4):
+                bad_pick = False
+        except:
+            print("Give me number 1, 2 or 3:\n> ")
 
-    try:
-        # if user gave a number
-        door_picked = int(input())
-        
-        # if user picked no. 1, 2 or 3
-        if door_picked in range(1, 4):
-            clear()
-            print("Ok.")
-            sleep(time)
-            clear()
-
-            # return picked door number
-            return door_picked
-
-        else:
-            # if user picked another number
-            clear()
-            print("Give me a number: 1, 2 or 3.")
-
-            # run a function again and take the return value
-            door_picked = pick_the_door()
-
-            # return pick door number
-            return door_picked
-
-    except:
-            # if user didn't give a number
-            clear()
-            print("Give me a number: 1, 2 or 3.")
-
-            # run a function again and take the return value
-            door_picked = pick_the_door()
-
-            # return picked door number
-            return door_picked
+    return door_picked
 
 # ask whether to knock the door or not
 def ask_to_knock():
 
-    # get user answer
-    knock_decision = input("Do you want to knock the door or open it right away?\n> ")
+    knock = None
+    while knock == None:
+        # get user answer
+        knock_decision = input("Do you want to knock the door or open it right away?\n> ")
+        knock_decision_list = knock_decision.split(" ")
 
-    # convert user answer into words list - tulip    
-    knock_decision_list = knock_decision.split(" ")
+        # user want to knock
+        if 'knock' in knock_decision_list or 'Knock' in knock_decision_list:
+            knock = True
 
-    # user want to knock
-    if 'knock' in knock_decision_list or 'Knock' in knock_decision_list:
-        # save user decision
-        knock = True
+        # user want to open
+        elif 'open' in knock_decision_list or 'Open' in knock_decision_list:
+            knock = False
+            print("So rude...")
+            sleep(2*time)
+            clear()
 
-    # user want to open
-    elif 'open' in knock_decision_list or 'Open' in knock_decision_list:
-        # save user decision
-        knock = False
-
-        print("So rude...")
-        sleep(2*time)
-        clear()
-
-    # other answer
-    else:
-        # run the function again
-        knock = ask_to_knock()
-
-    # return user decision
     return knock
 
-# knock the door
 def knock_the_door(door_picked):
 
     # knock-knock joke
@@ -213,10 +163,8 @@ def knock_the_door(door_picked):
     print("\nHaha\nGood one!\nYou can enter the door.")
     sleep(4*time)
 
-    # open the door
     open_the_door(door_picked)
 
-# open the picked door
 def open_the_door(door_picked):
 
     clear()
@@ -280,10 +228,6 @@ def open_the_door(door_picked):
         print("Puszek.")
         sleep(3*time)
 
-    else:
-        print("open_the_door error")
-        exit()
-
     print("\n(If you don't know Polish. Just so you know, this part was realy funny.)")
     sleep(4*time)
     clear()
@@ -292,44 +236,17 @@ def open_the_door(door_picked):
     sleep(4*time)
     clear()
 
-    # OUT OF USE
-    # ask whether to to visit another room or leave
-    #enter_or_leave()
-
-    # take user answer
     decision = input("Do you want to visit another room? You can quit the game - just type 'leave'\n> ")
 
-    # if user wants to leave the game
     if 'leave' in decision or 'Leave' in decision:
         clear()
         print("Hope you enjoyed the game\n")
         print("Have a nice day! :)\n")
-        # leave the game
         exit()
 
     else:
         # play again 
         main_game()
-
-# OUT OF USE
-# # ask whether to to visit another room or leave 
-def enter_or_leave():
-
-    # take user answer
-    decision = input("\nDo you want to visit another room? You can quit the game - just type 'leave'\n> ")
-
-    # if user wants to leave the game
-    if 'leave' in decision or 'Leave' in decision:
-        clear()
-        print("Have a nice day :)\n")
-        # leave the game
-        exit()
-
-    else:
-        # play again 
-        main_game()
-
-
 
 # get an OS name
 system_name = platform.system()
@@ -340,11 +257,11 @@ strURL_sense_fear = "https://drive.google.com/file/d/1xkDTRZA3Fsm1gGJVFFlNfFq_85
 
 # define a time increment [seconds]
 # set to 0 for the faster debugging
-time = 1
+time = 0
 
-# start the conversation with a user
-game_instroduction()
+first_choice = True
 
-# start the main game
+begin_a_game()
+
 main_game()
 
