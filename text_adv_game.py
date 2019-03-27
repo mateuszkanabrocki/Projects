@@ -1,5 +1,5 @@
 # freez program for specified time
-from time import sleep 
+from time import sleep
 
 # run shell cmdlet
 from os import system
@@ -16,14 +16,15 @@ from sys import exit
 
 # clear IDLE window
 def clear():
-    
+
     # for Windows
     if system_name == "Windows":
         system('cls')
 
     # for Mac and Linux
-    else: 
-        system('clear') 
+    else:
+        system('clear')
+
 
 def open_URL():
 
@@ -32,6 +33,7 @@ def open_URL():
     sleep(3*time)
     webbrowser.open(strURL_sense_fear, new=1)
     sleep(3*time)
+
 
 def begin_a_game():
 
@@ -78,7 +80,7 @@ def begin_a_game():
     sleep(time)
 
     open_URL()
-    
+
     clear()
     print("Didn't mean to scare you.")
     sleep(3*time)
@@ -86,6 +88,7 @@ def begin_a_game():
     sleep(3*time)
     print("Imagine you're in a dark room with 3 doors.\n")
     sleep(2*time)
+
 
 def main_game():
 
@@ -103,38 +106,43 @@ def main_game():
     else:
         open_the_door(door_picked)
 
+
 # ask a user for a door number
 def pick_the_door():
 
     global first_choice
     print("Which door do you choose?\n> ")
 
-    if first_choice == True:
+    if first_choice:
         sleep(time/2)
         print("WAIT!")
         sleep(time)
         print("Pick wisely...\n> ")
         sleep(time)
         first_choice = False
-    
+
     bad_pick = True
     while(bad_pick):
         try:
             door_picked = int(input())
             if door_picked in range(1, 4):
                 bad_pick = False
-        except:
+        except ValueError:
             print("Give me number 1, 2 or 3:\n> ")
 
     return door_picked
+
 
 # ask whether to knock the door or not
 def ask_to_knock():
 
     knock = None
-    while knock == None:
+    while knock is None:
         # get user answer
-        knock_decision = input("Do you want to knock the door or open it right away?\n> ")
+        knock_decision = input(
+            'Do you want to knock the door',
+            ' or open it right away?\n> '
+        )
         knock_decision_list = knock_decision.split(" ")
 
         # user want to knock
@@ -150,6 +158,7 @@ def ask_to_knock():
 
     return knock
 
+
 def knock_the_door(door_picked):
 
     # knock-knock joke
@@ -164,6 +173,7 @@ def knock_the_door(door_picked):
     sleep(4*time)
 
     open_the_door(door_picked)
+
 
 def open_the_door(door_picked):
 
@@ -187,7 +197,7 @@ def open_the_door(door_picked):
         print("KotLecik!")
         sleep(3*time)
         print("\nThe cat is too busy.")
-        
+
     elif door_picked == 2:
         clear()
         print("Wchodzisz do drugiego pokoju.")
@@ -198,7 +208,10 @@ def open_the_door(door_picked):
         sleep(2*time)
         print("Następna konkurencja to wyścig z przekodami.")
         sleep(1*time)
-        print("W konkurencji bierze udział ślepy koń, który udziela wywiadu tuż przed rozpoczęciem wyścigiem.")
+        print(
+            "W konkurencji bierze udział ślepy koń, ",
+            "który udziela wywiadu tuż przed rozpoczęciem wyścigiem."
+        )
         sleep(4*time)
 
         input("\nCo mówi ślepy koń na wyścigach z przeszkodami?\n> ")
@@ -215,7 +228,10 @@ def open_the_door(door_picked):
         sleep(2*time)
         print("Nie wiem gdzie jesteś.")
         sleep(2*time)
-        print("Przed sobą widzisz złomiarza ciągnącego za sobą worek z puszkami.")
+        print(
+            "Przed sobą widzisz złomiarza ",
+            "ciągnącego za sobą worek z puszkami."
+        )
         sleep(2*time)
         print("Za złomiarzem podąża jego pies.")
         sleep(4*time)
@@ -228,7 +244,10 @@ def open_the_door(door_picked):
         print("Puszek.")
         sleep(3*time)
 
-    print("\n(If you don't know Polish. Just so you know, this part was realy funny.)")
+    print(
+        "\n(If you don't know Polish. Just so you know, "
+        "this part was realy funny.)"
+    )
     sleep(4*time)
     clear()
 
@@ -236,7 +255,10 @@ def open_the_door(door_picked):
     sleep(4*time)
     clear()
 
-    decision = input("Do you want to visit another room? You can quit the game - just type 'leave'\n> ")
+    decision = input(
+        "Do you want to visit another room?"
+        "You can quit the game - just type 'leave'\n> "
+    )
 
     if 'leave' in decision or 'Leave' in decision:
         clear()
@@ -245,8 +267,9 @@ def open_the_door(door_picked):
         exit()
 
     else:
-        # play again 
+        # play again
         main_game()
+
 
 # get an OS name
 system_name = platform.system()
@@ -264,4 +287,3 @@ first_choice = True
 begin_a_game()
 
 main_game()
-
