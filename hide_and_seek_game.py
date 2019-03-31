@@ -1,18 +1,14 @@
 from textwrap import dedent
 
-# freez program execusion for specified time
-from time import sleep
+import random
 
-# run shell cmdlet
 from os import system
+
+# freeze program execusion for specified time
+from time import sleep
 
 # get an OS name
 import platform
-
-import random
-
-# get an OS name
-system_name = platform.system()
 
 
 class GameEngine(object):
@@ -22,7 +18,7 @@ class GameEngine(object):
 
     def play(self):
 
-        # begin with a starting place
+        # begin with a starting location
         current_place = self.map_of_locations.first_place()
         next_place_name = current_place.enter()
 
@@ -39,7 +35,7 @@ class Place(object):
     def clear(self):
 
         # for Windows
-        if system_name == "Windows":
+        if platform.system() == "Windows":
             system('cls')
 
         # for Mac and Linux
@@ -91,7 +87,7 @@ class Rome(Place):
         sleep(2 * time)
 
         answer = input("What will Jeff do?\n('look around' / 'fly to Paris')\n> ")
-        decided = None
+        decided = False
 
         while not decided:
 
@@ -99,8 +95,8 @@ class Rome(Place):
                 decided = True
                 self.clear()
                 print('Jeff spent 2 years 65 days 34 minutes and 21 seconds',
-                      'looking for Bob in Rome.\nThen decided to look for him',
-                      'in Paris as he knew Bob has a family there.')
+                      'looking for Bob in Rome.\nThen decided to fly to Paris and look Bob there',
+                      'as he knew Bob has a family there.')
                 sleep(2 * time)
 
             elif 'fly to Paris' in answer:
@@ -125,10 +121,11 @@ class Paris(Place):
         print("Jeff started getting tired so he decided to take a break",
               "and have a drink at the nearest bar.")
         sleep(2 * time)
-        print("But then he saw some shadow moving behind the tree...")
+        print("But then he saw some shadow moving behind the tree...\n")
         sleep(2 * time)
-        answer = input("\nWas it Bob?!\n(yes/no)\n>  ")
-        decided = None
+
+        answer = input("Was it Bob?!\n(yes/no)\n> ")
+        decided = False
 
         while not decided:
 
@@ -146,7 +143,7 @@ class Paris(Place):
 
             else:
                 self.clear()
-                answer = input("Was it Bob?!\n(yes/no)\n>  ")
+                answer = input("Was it Bob?!\n(yes/no)\n> ")
 
         return 'Cafe'
 
@@ -160,15 +157,14 @@ class Cafe(Place):
         print("Jeff looked and the door. A smile appeared on his face."
               "He slowly stepped inside the bar.")
         sleep(2 * time)
+        print("\nIt was a dark and a crowded place. Great to hide.\n",
+              "Yes! Bob must be somewhere here.\n")
+        sleep(2 * time)
 
         places_to_hide = ['kitchen', 'downstairs', 'behind the bar']
         bob_hide = random.choice(places_to_hide)
-        found = False
-
-        print("\nIt was a dark and a crowded place. Perfect to hide.\n",
-              "That was it! Bob must be somewhere here.\n")
-        sleep(2 * time)
         answer = input("Where is he hiding?\n(kitchen / downstairs / behind the bar)\n> ")
+        found = False
 
         while not found:
 
@@ -181,12 +177,11 @@ class Cafe(Place):
                     break
 
                 else:
-                    print("There is no Bob there!")
+                    print("There is no Bob in a kitchen!")
                     sleep(2 * time)
                     answer = input("\nWhere is he?\n(kitchen / downstairs / behind the bar)\n> ")
 
             elif 'downstairs' in answer:
-
                 self.clear()
                 print("Jeff: Bob downstairs!")
                 sleep(2 * time)
@@ -195,12 +190,11 @@ class Cafe(Place):
                     break
 
                 else:
-                    print("There is no Bob there!")
+                    print("There is no Bob downstairs!")
                     sleep(2 * time)
                     answer = input("\nWhere is he?\n(kitchen / downstairs / behind the bar)\n> ")
 
             elif 'behind the bar' in answer:
-
                 self.clear()
                 print("Jeff: Bob behind the bar!")
                 sleep(2 * time)
@@ -209,7 +203,7 @@ class Cafe(Place):
                     break
 
                 else:
-                    print("There is no Bob there!")
+                    print("There is no Bob behind the bar!")
                     sleep(2 * time)
                     answer = input("\nWhere is he?\n(kitchen / downstairs / behind the bar)\n> ")
 
@@ -221,6 +215,7 @@ class Cafe(Place):
         print("You found Bob!")
         print("You broke the world record in hide and seek by 3 years 5 days",
               "2 hours 30 minutes and 3 seconds!\n")
+        print("Great job Jeff.")
 
         return 'finished'
 
@@ -245,7 +240,7 @@ class Map(object):
         return Map.locations.get(place_name)
 
 
-# time unit for sleep function
+# time increment for sleep function
 time = 1
 # initiate location map for the game
 map_of_locations = Map('Rome')

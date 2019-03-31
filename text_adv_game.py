@@ -1,4 +1,4 @@
-# freez program for specified time
+# freeze program for specified time
 from time import sleep
 
 # run shell cmdlet
