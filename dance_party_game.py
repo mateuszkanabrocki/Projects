@@ -60,22 +60,23 @@ class Game_intro(Scene):
         self.clear()
         print(dedent("""
             WARNING!!!
-            This game is not for people with weak nerves...
+            This game is not for the people with weak nerves...
             """))
 
-        sleep(3*self.time)
+        sleep(2*self.time)
         self.clear()
         print(dedent("""
                     Today you are Jeff. Recently you've started attending
-                    dancing class, more precisely brazilian zouk classes.
-                    (it's a dance in a couple like salsa or tango)
+                    dancing class, brazilian zouk classes more precisely .
+                    (it's a dance in couples like salsa or tango)
 
-                    You've always had a fear of dancing. That's why you
-                    started to take these classes. You're doing pretty
-                    well but you're still a little afraid of dancing at
-                    the regular latino dance party.
+                    You were always scared of dancing. That's why you
+                    started attending these classes. You're doing pretty
+                    fine but you're still a little a bit shy when
+                    it's a bout dancing in the party.
 
-                    Finally, your friend encouraged you to visit one.
+                    Finally, your friend encouraged you to go to one.
+
                     Damn, you're scared like a scared mouse!
                     """), end="")
 
@@ -84,9 +85,9 @@ class Game_intro(Scene):
                     But here you are in Pick&Roll Club latino party
                     saturday night! It's 11 p.m.. There is stil only
                     a few people around.
-                    That's good. The less the better, right.
+                    That's good. The less the better, right?
 
-                    You here the song rhytm going like:
+                    You hear the song rhytm going like:
                     buuum  cik cik...
                     buuum  cik cik...
                     """))
@@ -98,33 +99,41 @@ class Waiting(Scene):
 
     def run(self):
 
-        for wait_number in range(4):
-            # self.clear()
-            print(random.choice([
-                "This song is pretty fast.",
-                "Ahh, it's Kizomba...",
-                "Ahh, it's Bachata...",
-                "Ahh, it's Salsa...",
-                "I don't know this song.",
-                "I don't like this song.",
-                "This song is really slow."
-            ]))
+        wait_number = 0
+
+        while wait_number < 3:
+
             wait = input("\nWanna wait for the next song?\n(yes/no)\n> ")
             self.clear()
 
             if 'yes' in wait:
-                print("\nLet's wait than, waiting is cool.\n")
-                sleep(5*self.time)
+                print("\nLet's wait. Waiting is cool.\n")
+                sleep(3*self.time)
                 wait_number += 1
+                print(random.choice([
+                                    "This song is pretty fast.",
+                                    "Ahh, it's Kizomba...",
+                                    "Ahh, it's Bachata...",
+                                    "Ahh, it's Salsa...",
+                                    "I don't know this song.",
+                                    "I don't like this song.",
+                                    "This song is really slow."
+                                    ]))
 
             elif 'no' in wait:
                 return 'ask_to_dance'
 
+            else:
+                pass
+
         self.clear()
-        print(dedent("""You've been waiting so long for the better song
-                    that finally some girl asked you to dance.\n
+        print(dedent("""
+                    You've been waiting so long for the better song
+                    that finally some girl asked you to dance.
+
                     """))
 
+        sleep(5*self.time)
         return 'start_to_dance'
 
 
@@ -139,7 +148,7 @@ class Ask_to_dance(Scene):
                     on the dance floor. Good for you!
 
                     Your eyes found a girl at the bar waiting for the dance.
-                    You are slowly going in her direction. She start to look
+                    You are slowly walking in her direction. She starts to look
                     at you too.
 
                     What do you do next?
@@ -184,7 +193,7 @@ class Ask_to_dance(Scene):
             elif answer == 'c':
                 sleep(1*self.time)
                 self.clear()
-                print("You are safe now.")
+                print("You are safe now.\n")
                 sleep(1*self.time)
 
                 return 'waiting'
@@ -201,18 +210,10 @@ class Start_to_dance(Scene):
 
     def run(self):
 
-        print(dedent(f"""
-                        Ok. Here we are on the dance floor.
-                        Now, just to start in rhythm.
-
-                        Music is quite fast.
-                        """))
-        sleep(2*self.time)
-        self.clear()
-
         try:
             while True:
                 for i in range(1, 5):
+                    self.clear()
                     print(dedent(f"""
                                 Ok. Here we are on the dance floor.
                                 Now, just to start in rhythm.
@@ -226,7 +227,6 @@ class Start_to_dance(Scene):
                                 """))
 
                     sleep(1*self.time)
-                    self.clear()
 
         except KeyboardInterrupt:
             self.clear()
@@ -246,16 +246,16 @@ class Just_dance(Scene):
     def just_dancing(self):
 
         moves = {
-            'a': "Going into laterall!\n",
-            'b': "Now a little bit of crusado...\n",
+            'a': "Going into laterall!",
+            'b': "Now a little bit of crusado...",
             'c': "And a bumerang!\n",
-            'd': "Taking some breath while leading boneca.\n",
-            'e': "This song is too fast for roasted chicken!\nI don't wanna die!\n"
+            'd': "Taking some breath while leading boneca.",
+            'e': "This song is too fast for roasted chicken!\nI don't wanna die!"
                 }
 
         print(dedent("""
-                    The steps! I'm still dancing basic step.
-                    I need to dance some other steps too.
+                    Ok, the steps.
+                    I need to dance some other steps now.
 
                     What should I dance now?
 
@@ -268,26 +268,24 @@ class Just_dance(Scene):
                     (type a, b, c, d or e)
                     """))
 
-        for i in range(5):
+        i = 0
 
+        while i < 5:
+            
             steps = input()
 
             if steps in moves.keys():
                 print(moves.get(steps))
-
-                sleep(1*self.time)
+                i += 1
 
             else:
-                i -= 1
-
-        sleep(2*self.time)
+                pass
 
     def run(self):
 
         print(dedent("""
                 Ok. Here we go. Just keep the rhythm, listen to the music,
-                watch the dance floor and lead the steps.
-                    """))
+                watch the dance floor and lead the steps."""))
 
         sleep(2*self.time)
         self.just_dancing()
@@ -311,7 +309,7 @@ class Just_dance(Scene):
 
             if to_do == 'a':
                 self.clear()
-                print("You fainted.\n Nice try though!")
+                print("You fainted.\nNice try though!")
                 return 'game_over'
 
             elif to_do == 'b':
@@ -341,9 +339,9 @@ class Just_dance(Scene):
         while True:
             self.clear()
             to_do = input(dedent("""
-                                Watch's out!
-                                One couple is moving very fast towards you.
-                                They can't see you!
+                                Watch out!
+                                One couple is moving very fast towards us.
+                                They can't see us!
 
                                 What should I do now?
 
@@ -359,8 +357,8 @@ class Just_dance(Scene):
                             They hit you like a tornado,
                             but you're girl is safe!
 
-                            That hurt.
-                            """))
+                            That hurt."""))
+
                 sleep(3*self.time)
                 return 'last_scene'
 
@@ -370,8 +368,8 @@ class Just_dance(Scene):
                             You avoided the dangerous couple
                             but youbumped into another one.")
 
-                            That hurt.
-                            """))
+                            That hurt."""))
+                            
                 sleep(3*self.time)
                 return 'last_scene'
 
@@ -383,14 +381,13 @@ class Last_scene(Scene):
         print(dedent("""
                     You did it! The song finished and you're alive!
                     Good job!
-
                     """))
 
 
 class Game_over(Scene):
 
     def run(self):
-        print("'nIt could be better. But at least to tried!")
+        print("\nIt could be better. But at least you tried!")
 
 
 class Scenerio(object):
