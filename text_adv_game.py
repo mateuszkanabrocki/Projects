@@ -1,17 +1,21 @@
+# -*- coding: utf-8 -*-
+
+# in case o 'unicode error':
+# export PYTHONIOENCODING=UTF-8
+
+
 # freeze program for specified time
 from time import sleep
-
 # run shell cmdlet
 from os import system
-
 # get an OS name
 import platform
-
 # open URL in browser
 import webbrowser
-
 # quit the function
 from sys import exit
+
+
 
 
 # clear IDLE window
@@ -29,8 +33,8 @@ def clear():
 def open_URL():
 
     # open URL in default browser
-    webbrowser.open(strURL_bu, new=1)
-    sleep(3*time)
+    # webbrowser.open(strURL_bu, new=1)
+    # sleep(3*time)
     webbrowser.open(strURL_sense_fear, new=1)
     sleep(3*time)
 
@@ -77,8 +81,7 @@ def begin_a_game():
         clear()
 
     print("Bu.")
-    sleep(time)
-
+    sleep(2*time)
     open_URL()
 
     clear()
@@ -111,13 +114,14 @@ def main_game():
 def pick_the_door():
 
     global first_choice
+    clear()
     print("Which door do you choose?\n> ")
 
     if first_choice:
         sleep(time/2)
         print("WAIT!")
         sleep(time)
-        print("Pick wisely...\n> ")
+        print("Pick wisely...\n> ", end="")
         sleep(time)
         first_choice = False
 
@@ -140,23 +144,28 @@ def ask_to_knock():
     while knock is None:
         # get user answer
         knock_decision = input(
-            'Do you want to knock the door',
-            ' or open it right away?\n> '
+            ' Do you want to knock or open it right away?\n> '
         )
         knock_decision_list = knock_decision.split(" ")
 
-        # user want to knock
-        if 'knock' in knock_decision_list or 'Knock' in knock_decision_list:
-            knock = True
+        knock_list = ('knock', 'Knock', 'yes')
+        open_list = ('open', 'Open')
+        
+        for i in knock_list:
+            # user want to knock
+            if i in knock_decision_list:
+                knock = True
+                break
+        for i in open_list:
+            # user wants to open
+            if i in knock_decision_list:
+                knock = False
+                print("So rude...")
+                sleep(2*time)
+                clear()
+                break
 
-        # user want to open
-        elif 'open' in knock_decision_list or 'Open' in knock_decision_list:
-            knock = False
-            print("So rude...")
-            sleep(2*time)
-            clear()
-
-    return knock
+        return knock
 
 
 def knock_the_door(door_picked):
@@ -194,7 +203,7 @@ def open_the_door(door_picked):
         sleep(1*time)
         clear()
         sleep(2*time)
-        print("KotLecik!")
+        print("Kotlecik!")
         sleep(3*time)
         print("\nThe cat is too busy.")
 
@@ -202,41 +211,41 @@ def open_the_door(door_picked):
         clear()
         print("Wchodzisz do drugiego pokoju.")
         sleep(time)
-        print("Jesteś na VI Miedzyregionalnych Zawodach Jeździeckich.")
+        print(u"Jesteś na VI Miedzyregionalnych Zawodach Jeździeckich.")
         sleep(2*time)
         print("W Cieszynie.\n")
         sleep(2*time)
-        print("Następna konkurencja to wyścig z przekodami.")
+        print(u"Następna konkurencja to wyścig z przekodami.")
         sleep(1*time)
         print(
-            "W konkurencji bierze udział ślepy koń, ",
-            "który udziela wywiadu tuż przed rozpoczęciem wyścigiem."
+            u"W konkurencji bierze udział ślepy koń, ",
+            u"który udziela wywiadu tuż przed rozpoczęciem wyścigiem."
         )
         sleep(4*time)
 
-        input("\nCo mówi ślepy koń na wyścigach z przeszkodami?\n> ")
+        input(u"\nCo mówi ślepy koń na wyścigach z przeszkodami?\n> ")
 
         sleep(1*time)
         clear()
         sleep(2*time)
-        print("Nie widzę przeszkód.")
+        print(u"Nie widzę przeszkód!")
         sleep(3*time)
 
     elif door_picked == 3:
         clear()
         print("Wchodzisz do trzeciego pokoju.")
         sleep(2*time)
-        print("Nie wiem gdzie jesteś.")
+        print(u"Nie wiem gdzie jesteś.")
         sleep(2*time)
         print(
-            "Przed sobą widzisz złomiarza ",
-            "ciągnącego za sobą worek z puszkami."
+            u"Przed sobą widzisz złomiarza ",
+            u"ciągnącego za sobą worek z puszkami."
         )
         sleep(2*time)
-        print("Za złomiarzem podąża jego pies.")
+        print(u"Za złomiarzem podąża jego pies.")
         sleep(4*time)
 
-        input("\nJak nazywa się pies złomiarza?\n> ")
+        input(u"\nJak nazywa się pies złomiarza?\n> ")
 
         sleep(1*time)
         clear()
@@ -256,7 +265,7 @@ def open_the_door(door_picked):
     clear()
 
     decision = input(
-        "Do you want to visit another room?"
+        "Do you want to visit another room?\n"
         "You can quit the game - just type 'leave'\n> "
     )
 
@@ -274,13 +283,24 @@ def open_the_door(door_picked):
 # get an OS name
 system_name = platform.system()
 
+try:
+    print('załółć gęślą jaźń')
+    clear()
+except UnicodeEncodeError:
+    clear()
+    print("To run the game set default encoding to UTF-8"
+          "by typing the following in the command line:\n"
+          "export PYTHONIOENCODING=UTF-8")
+    exit()
+
+
 # assign URLs to be opened
 strURL_bu = "https://drive.google.com/file/d/1dae-FJTJnbZ_xQmmsFFRUh5kZUalkFqc/view?usp=sharing"
 strURL_sense_fear = "https://drive.google.com/file/d/1xkDTRZA3Fsm1gGJVFFlNfFq_851aKQlh/view?usp=sharing"
 
 # define a time increment [seconds]
 # set to 0 for the faster debugging
-time = 0
+time = 1
 
 first_choice = True
 
