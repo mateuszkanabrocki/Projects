@@ -48,30 +48,28 @@ class Rome(Place):
     def enter(self):
 
         self.clear()
-        print("It's 1963. We're in Roma, the city of ancient gods.", end="")
         print(dedent("""
-        Today also the world center of sport.
+        It's 1963. We're in Roma, the city of ancient gods!
+        Today also in the world sport center.
         These are the last days of the Olimpics Games
         and we're about to begin the hide and seek final competition."""))
         sleep(2 * time)
         print(dedent("""
         We have two hide-seekers who made their way to the final.
-        As a hider: Bob McBobber from England
-        As a seeker: Jeff Jefftyjeff from USA, which is in America."""))
+        As a hiker: Bob McBobber from Englang.
+        As a seeker: Jeff Jefftyjeff from USA,
+        which is in America."""))
         sleep(2 * time)
-        print(dedent("""
-        Jeff already closed his eyes.
-        As soon as he starts to counts from 10 to 0 the game will begin."""))
         print("(start to count from 10 to 0)")
 
         number = 10
-
         while number > -1:
             count = input(">  ")
 
             if count != str(number):
-                print("Oh no! Jeff didn't practise his counting!\n",
-                      "Now he has to start again!")
+                print(dedent("""
+                Oh no! Jeff didn't practise his counting!
+                Now he has to start again!"""))
                 sleep(1 * time)
                 print("(start to count from 10 to 0)")
                 number = 10
@@ -80,7 +78,7 @@ class Rome(Place):
                 number -= 1
 
         self.clear()
-        print("Jeff: Ready or not, here I come!\n")
+        print("\nJeff: Ready or not, here I come!\n")
         sleep(2 * time)
         print("Jeff finished counting!\nWhat a speed!", end=" ")
         print("But Bob is already gone!\n")
@@ -94,9 +92,10 @@ class Rome(Place):
             if 'look around' in answer:
                 decided = True
                 self.clear()
-                print('Jeff spent 2 years 65 days 34 minutes and 21 seconds',
-                      'looking for Bob in Rome.\nThen decided to fly to Paris and look Bob there',
-                      'as he knew Bob has a family there.')
+                print(dedent("""
+                Jeff spent 2 years 65 days 34 minutes and 21 seconds
+                looking for Bob in Rome. Then decided to fly to Paris and look Bob there
+                as he knew Bob has a family there."""))
                 sleep(2 * time)
 
             elif 'fly to Paris' in answer:
@@ -114,12 +113,15 @@ class Paris(Place):
 
     def enter(self):
 
-        print("\nParis is a big city.\n",
-              "Jeff has been looking for Bob for 7 years 54 days 5 hours",
-              "14 minutes and 2 seconds.\nHe couldn't find him anywhere.\n")
+        print(dedent("""
+        Paris is a big city.
+        Jeff has been looking for Bob for 7 years 54 days 5 hours
+        14 minutes and 2 seconds.
+        He could't find him anywhere."""))
         sleep(2 * time)
-        print("Jeff started getting tired so he decided to take a break",
-              "and have a drink at the nearest bar.")
+        print(dedent("""
+        Jeff started getting tired so he decided to take a break
+        and have a drink at the nearest bar."""))
         sleep(2 * time)
         print("But then he saw some shadow moving behind the tree...\n")
         sleep(2 * time)
@@ -132,8 +134,10 @@ class Paris(Place):
             if 'yes' in answer:
                 decided = True
                 self.clear()
-                print("Jeff pointed his finger at the tree",
-                      "and shouted:\n\"Bob behind the tree!\"\n")
+                print(dedent("""
+                Jeff pointed his finger at the tree
+                and shouted: Bob behind the tree!
+                """))
                 sleep(2 * time)
                 print("It was just a wind!\nAh, so close...")
                 sleep(3 * time)
@@ -154,11 +158,13 @@ class Cafe(Place):
 
         print("\nSomebody run into Cafe.")
         sleep(2 * time)
-        print("Jeff looked and the door. A smile appeared on his face."
-              "He slowly stepped inside the bar.")
+        print(dedent("""
+        Jeff looked and the door. A smile appeared on his face
+        He slowly entered the bar."""))
         sleep(2 * time)
-        print("\nIt was a dark and a crowded place. Great to hide.\n",
-              "Yes! Bob must be somewhere here.\n")
+        print(dedent("""
+        It was a dark and a crowded place. Great to hide.
+        Yes! Bob must be somewhere here."""))
         sleep(2 * time)
 
         places_to_hide = ['kitchen', 'downstairs', 'behind the bar']
@@ -212,10 +218,12 @@ class Cafe(Place):
                 answer = input("\nWhere is he?\n(kitchen / downstairs / behind the bar)\n> ")
 
         self.clear()
-        print("You found Bob!")
-        print("You broke the world record in hide and seek by 3 years 5 days",
-              "2 hours 30 minutes and 3 seconds!\n")
-        print("Great job Jeff.")
+        print(dedent("""
+        You found Bob!
+        You broke the world record in hide and seek
+        by 3 years 5 days 2 hours 30 minutes and 3 seconds!
+        Great job Jeff!
+        """))
 
         return 'finished'
 
