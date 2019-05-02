@@ -1,5 +1,5 @@
 from nose.tools import assert_in, assert_equal, assert_raises
-from planisphere_3rooms import *
+from gothonweb.planisphere_3rooms import *
 
 
 def test_room():

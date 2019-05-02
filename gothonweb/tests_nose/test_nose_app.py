@@ -4,7 +4,8 @@ import planisphere_gothonweb
 from flask import Flask, session
 from os.path import exists
 from shutil import copyfile
-from test_functions import delete_file
+from testing_functions import delete_file
+
 
 # make it easier to debug
 app.config['TESTING'] = True

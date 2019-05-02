@@ -16,11 +16,8 @@ import webbrowser
 from sys import exit
 
 
-
-
 # clear IDLE window
 def clear():
-
     # for Windows
     if system_name == "Windows":
         system('cls')
@@ -29,18 +26,14 @@ def clear():
     else:
         system('clear')
 
-
 def open_URL():
-
     # open URL in default browser
-    # webbrowser.open(strURL_bu, new=1)
-    # sleep(3*time)
+    #webbrowser.open(strURL_bu, new=1)
+    #sleep(3*time)
     webbrowser.open(strURL_sense_fear, new=1)
     sleep(3*time)
 
-
 def begin_a_game():
-
     clear()
     input(f"Hi there {system_name} user.\n> ")
     sleep(time)
@@ -57,7 +50,6 @@ def begin_a_game():
     if 'yes' in ready or 'Yes' in ready:
         clear()
         sleep(time)
-
     # user is not ready to play
     elif 'no' in ready or 'No' in ready:
         print("Take your time.")
@@ -65,7 +57,6 @@ def begin_a_game():
         print("Ok. The time is over.")
         sleep(time)
         clear()
-
     else:
         print("Hm, I take it for yes.")
         sleep(2*time)
@@ -92,9 +83,7 @@ def begin_a_game():
     print("Imagine you're in a dark room with 3 doors.\n")
     sleep(2*time)
 
-
 def main_game():
-
     # ask for a door number
     door_picked = pick_the_door()
 
@@ -109,10 +98,8 @@ def main_game():
     else:
         open_the_door(door_picked)
 
-
 # ask a user for a door number
 def pick_the_door():
-
     global first_choice
     clear()
     print("Which door do you choose?\n> ")
@@ -136,10 +123,8 @@ def pick_the_door():
 
     return door_picked
 
-
 # ask whether to knock the door or not
 def ask_to_knock():
-
     knock = None
     while knock is None:
         # get user answer
@@ -167,9 +152,7 @@ def ask_to_knock():
 
         return knock
 
-
 def knock_the_door(door_picked):
-
     # knock-knock joke
     clear()
     print("> Knock, knock\n> ", end="")
@@ -183,9 +166,7 @@ def knock_the_door(door_picked):
 
     open_the_door(door_picked)
 
-
 def open_the_door(door_picked):
-
     clear()
     print("(Unfortunately. This part will be covered in Polish.)")
     sleep(4*time)
@@ -199,7 +180,6 @@ def open_the_door(door_picked):
         sleep(2*time)
 
         input("Jak nazywa się ten kot?\n> ")
-
         sleep(1*time)
         clear()
         sleep(2*time)
@@ -224,7 +204,6 @@ def open_the_door(door_picked):
         sleep(4*time)
 
         input(u"\nCo mówi ślepy koń na wyścigach z przeszkodami?\n> ")
-
         sleep(1*time)
         clear()
         sleep(2*time)
@@ -246,7 +225,6 @@ def open_the_door(door_picked):
         sleep(4*time)
 
         input(u"\nJak nazywa się pies złomiarza?\n> ")
-
         sleep(1*time)
         clear()
         sleep(1*time)
@@ -274,11 +252,9 @@ def open_the_door(door_picked):
         print("Hope you enjoyed the game\n")
         print("Have a nice day! :)\n")
         exit()
-
     else:
         # play again
         main_game()
-
 
 # get an OS name
 system_name = platform.system()
@@ -295,7 +271,7 @@ except UnicodeEncodeError:
 
 
 # assign URLs to be opened
-strURL_bu = "https://drive.google.com/file/d/1dae-FJTJnbZ_xQmmsFFRUh5kZUalkFqc/view?usp=sharing"
+#strURL_bu = "https://drive.google.com/file/d/1dae-FJTJnbZ_xQmmsFFRUh5kZUalkFqc/view?usp=sharing"
 strURL_sense_fear = "https://drive.google.com/file/d/1xkDTRZA3Fsm1gGJVFFlNfFq_851aKQlh/view?usp=sharing"
 
 # define a time increment [seconds]

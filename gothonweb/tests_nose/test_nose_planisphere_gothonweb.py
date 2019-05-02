@@ -1,6 +1,6 @@
+### NOSE TESTS
 from nose.tools import assert_equal, assert_in, assert_raises
-from planisphere_gothonweb import *
-
+from gothonweb.planisphere_gothonweb import *
 
 def test_room():
     gold = Room("GoldRoom",

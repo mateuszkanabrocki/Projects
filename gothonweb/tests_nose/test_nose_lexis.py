@@ -1,5 +1,5 @@
 from nose.tools import assert_equal
-from lexis_gothonweb import *
+from gothonweb.lexis_gothonweb import *
 
 direction = ['north', 'south', 'east', 'west', 'down', 'up', 'left', 'right', 'back']
 do = ['go', 'stop', 'kill', 'eat', 'run']
