@@ -1,2 +1,5 @@
 include gothonweb/sessions/*
 include gothonweb/templates/*
+include tests_unit/*
+include tests_py/*
+include tests_nose/*
