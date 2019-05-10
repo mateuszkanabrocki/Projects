@@ -6,7 +6,7 @@ except ImportError:
 
 setup(
     name='gothonweb',
-    version='1.0',
+    version='2.0',
     description='Simple text-based game run in the web browser.',
     author='Mateusz Kanabrocki',
     author_email='mateusz.kanabrocki@gmail.com',
