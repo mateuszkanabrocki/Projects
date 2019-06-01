@@ -6,6 +6,16 @@ do = ['go', 'stop', 'kill', 'eat', 'run']
 stop = ['the', 'in', 'of', 'from', 'at', 'it', 'a']
 noun = ['door', 'bear', 'princess', 'cabinet']
 
+
+class Sentence(object):
+
+    def __init__(self, subject, do, obj):
+        # take ('noun','princess') return 'princess'
+        self.subject = subject[1]
+        self.do = do[1]
+        self.object = obj[1]
+
+        
 def test_sentence():
     sent_test = Sentence(['noun', 'sub'], ['do', 'ver'], ['noun', 'obj'])
     assert sent_test.subject == 'sub'
@@ -41,11 +51,6 @@ def test_parse_object():
     assert parse_object(parse_object_test1) == ('noun', 'bear')
     assert parse_object(parse_object_test2) == ('direction', 'left')
 
-def test_parse_subject():
-    parse_object_test1 = [('stop', 'The'), ('stop', 'The'), ('number', '2'), ('noun', 'bear'), ('error', 'hm')]
-    parse_object_test2 = [('stop', 'The'), ('do', 'run'), ('error', 'hm')]
-    assert parse_subject(parse_object_test1) == ('noun', 'bear')
-    assert parse_subject(parse_object_test2) == ('noun', 'player')
 
 def test_parse_sentence():
     parse_sen_test1 = [('stop', 'The'), ('noun', 'bear'), ('do', 'eat'), ('noun', 'princess')]

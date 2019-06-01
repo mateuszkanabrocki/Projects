@@ -1,21 +1,23 @@
-direction = []
+from typing import List, Dict, Union, Optional, Any
+
+
+direction = [] # type: List[str]
 do = ['yes', 'yeah', 'sure', 'ready', 'go', '1', 'one',
         '2', 'two', '3', 'three', 'quit', 'exit', 'leave', 'room']
 stop = ['the', 'in', 'of', 'from', 'at', 'it', 'a', 'him']
-noun = []
 
 
 class Room(object):
 
-    def __init__(self, name, description):
+    def __init__(self, name: str, description: str) -> None:
         self.name = name
         self.description = description
-        self.paths = {}
+        self.paths = {} # type: Dict[str, Room]
 
-    def go(self, direction):
+    def go(self, direction: str) -> Any: # Union[Room, None] throw Room not defined error
         return self.paths.get(direction, None)
 
-    def add_paths(self, paths):
+    def add_paths(self, paths: Any) -> None: # paths: Dict[str, Room] throw Room not defined error
         self.paths.update(paths)
 
 
@@ -167,17 +169,16 @@ start_place.add_paths({
     'go': Map.dict['door_pick']
 })
 
-def load_room(name):
+def load_room(name: str) -> Optional[Any]:
     white_list = ('start_place', 'door_pick', 'next_pick', 'door_3', 'door_2', 'door_1', 'the_end')
     if name not in white_list:
         raise Exception(f'You can\'t run load_room with {name} as a parameter.')
     return globals().get(name)
 
-def name_room(room):
+def name_room(room: Room) -> Union[str, Exception]:
     white_list = ('start_place', 'door_pick', 'next_pick', 'door_3', 'door_2', 'door_1', 'the_end')
     # give room object get room name
     for key, value in globals().items():
         if value == room and key in white_list:
             return key
-
-    raise Exception(f'You can\'t run name_room with {name} as a parameter.')
+    raise Exception(f'You can\'t run name_room with {room} as a parameter.')

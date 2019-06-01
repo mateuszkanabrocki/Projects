@@ -10,8 +10,12 @@ from planisphere_gothonweb import planisphere_gothonweb_path
 from flask import Flask, session
 from os.path import exists
 from shutil import copyfile
-from testing_functions import delete_file
+from os import remove
 
+
+def delete_file(filename: str):
+    testfile_path = os.path.join(os.path.dirname(__file__), f'../gothonweb/sessions/{filename}.txt')
+    remove(testfile_path)
 
 # make it easier to debug
 app.config['TESTING'] = True
@@ -24,8 +28,8 @@ planisphere_path = os.path.join(os.path.dirname(__file__), '../gothonweb/planisp
 def test_1adefault_setup():
     copyfile(planisphere_gothonweb_path, planisphere_path)
     try:
-        delete_file('new_user', gothonweb_path)
-        delete_file('test_gothonweb', gothonweb_path)
+        delete_file('new_user')
+        delete_file('test_gothonweb')
     except:
         pass
 
@@ -73,7 +77,7 @@ def test_log_in2():
         rv = web.get('/logout', follow_redirects=True)
         assert_in(b"click here to login", rv.data)
 
-        delete_file('test_gothonweb', gothonweb_path)
+        delete_file('test_gothonweb')
         rv = web.get('/logout', follow_redirects=True)
 
 
@@ -86,7 +90,7 @@ def test_app1():
         assert_in(b"have invaded your ship ", rv.data)
         assert_equal(session.get('room_name'), 'start_place')
 
-        delete_file('test_gothonweb', gothonweb_path)
+        delete_file('test_gothonweb')
         rv = web.get('/logout', follow_redirects=True) 
 
 
@@ -110,7 +114,7 @@ def test_app3():
         assert_in(b"logout", rv.data)
         assert_in(b"score", rv.data)
 
-        delete_file('test_gothonweb', gothonweb_path)
+        delete_file('test_gothonweb')
         rv = web.get('/logout', follow_redirects=True)
 
 
@@ -125,7 +129,7 @@ def test_app4():
         assert_in(b"Quick on the draw you yank", rv.data)
         assert_in(b"Play Again?", rv.data)
 
-        delete_file('test_gothonweb', gothonweb_path)
+        delete_file('test_gothonweb')
         rv = web.get('/logout', follow_redirects=True)
 
 
@@ -139,7 +143,7 @@ def test_app5():
         rv = web.post('/game', follow_redirects=True, data=data)
         assert_in(b"Lucky for you they made you learn", rv.data)
 
-        delete_file('test_gothonweb', gothonweb_path)
+        delete_file('test_gothonweb')
         rv = web.get('/logout', follow_redirects=True)
 
 
@@ -155,7 +159,7 @@ def test_app6():
         rv = web.post('/game', follow_redirects=True, data=data)
         assert_in(b"The container clicks open and the seal breaks, letting gas out.", rv.data)
 
-        delete_file('test_gothonweb', gothonweb_path)
+        delete_file('test_gothonweb')
         rv = web.get('/logout', follow_redirects=True)
 
 
@@ -172,7 +176,7 @@ def test_app7():
         assert_in(b"The lock buzzes one last", rv.data)
         assert_in(b"Play Again?", rv.data)
 
-        delete_file('test_gothonweb', gothonweb_path)
+        delete_file('test_gothonweb')
         rv = web.get('/logout', follow_redirects=True)
 
 
@@ -190,7 +194,7 @@ def test_app8():
         rv = web.post('/game', follow_redirects=True, data=data)
         assert_in(b"You point your blaster at the bomb", rv.data)
 
-        delete_file('test_gothonweb', gothonweb_path)
+        delete_file('test_gothonweb')
         rv = web.get('/logout', follow_redirects=True)
 
 
@@ -208,7 +212,7 @@ def test_app9():
         rv = web.post('/game', follow_redirects=True, data=data)
         assert_in(b"In a panic you throw the bomb", rv.data)
 
-        delete_file('test_gothonweb', gothonweb_path)
+        delete_file('test_gothonweb')
         rv = web.get('/logout', follow_redirects=True) 
 
 
@@ -228,7 +232,7 @@ def test_app10():
         rv = web.post('/game', follow_redirects=True, data=data)
         assert_in(b"You won!", rv.data)
 
-        delete_file('test_gothonweb', gothonweb_path)
+        delete_file('test_gothonweb')
         rv = web.get('/logout', follow_redirects=True)
 
 
@@ -252,7 +256,7 @@ def test_app11():
         assert_in(b"Current place: Death", rv.data)
         assert_in(b"You died 1 time", rv.data)
 
-        delete_file('test_gothonweb', gothonweb_path)
+        delete_file('test_gothonweb')
         rv = web.get('/logout', follow_redirects=True)
 
 
@@ -272,7 +276,7 @@ def test_app12():
         rv = web.get('/score', follow_redirects=True)
         assert_in(b"Current place:", rv.data)
 
-        delete_file('test_gothonweb', gothonweb_path)
+        delete_file('test_gothonweb')
         rv = web.get('/logout', follow_redirects=True)
 
 
@@ -289,7 +293,7 @@ def test_app13():
         assert_in(b"logout", rv.data)
         assert_in(b"score", rv.data)
 
-        delete_file('test_gothonweb', gothonweb_path)
+        delete_file('test_gothonweb')
         rv = web.get('/logout', follow_redirects=True)
 
 
@@ -302,8 +306,8 @@ def test_load_session1():
         file_exists = exists(f'{gothonweb_path}/gothonweb/gothonweb/sessions/new_user_gothonweb.txt')
         assert file_exists
 
-        delete_file('new_user_gothonweb', gothonweb_path)
-        delete_file('test_gothonweb', gothonweb_path)
+        delete_file('new_user_gothonweb')
+        delete_file('test_gothonweb')
         rv = web.get('/logout', follow_redirects=True)
 
 
@@ -320,8 +324,8 @@ def test_load_session2():
         assert_equal(file_lines[1], 'win_count = 0\n')
         assert_equal(file_lines[2], 'room_name = start_place')
 
-        delete_file('new_user_gothonweb', gothonweb_path)
-        delete_file('test_gothonweb', gothonweb_path)
+        delete_file('new_user_gothonweb')
+        delete_file('test_gothonweb')
         rv = web.get('/logout', follow_redirects=True)
 
 
@@ -339,7 +343,7 @@ def test_lexis1():
         assert_in(b"logout", rv.data)
         assert_in(b"score", rv.data)
 
-        delete_file('test_gothonweb', gothonweb_path)
+        delete_file('test_gothonweb')
         rv = web.get('/logout', follow_redirects=True)
 
 
@@ -357,7 +361,7 @@ def test_lexis2():
         assert_in(b"logout", rv.data)
         assert_in(b"score", rv.data)
 
-        delete_file('test_gothonweb', gothonweb_path)
+        delete_file('test_gothonweb')
         rv = web.get('/logout', follow_redirects=True)
 
 
@@ -371,5 +375,5 @@ def test_lexis3():
         rv = web.post('/game', follow_redirects=True, data=data)
         assert_in(b"Lucky for you they made you learn", rv.data)
 
-        delete_file('test_gothonweb', gothonweb_path)
+        delete_file('test_gothonweb')
         rv = web.get('/logout', follow_redirects=True)

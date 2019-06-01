@@ -40,10 +40,10 @@ class TestGothonPlanisphere(unittest.TestCase):
         self.assertEqual(start_room, start_place)
         self.assertEqual(start_place.go('shoot'), shoot)
         self.assertEqual(start_place.go('dodge'), dodge)
-        self.assertEqual(start_place.go('tell a joke'), laser_weapon_armory)
+        self.assertEqual(start_place.go('tell joke'), laser_weapon_armory)
     
-        self.assertEqual(the_bridge.go('throw the bomb'), throw_the_bomb)
-        self.assertEqual(the_bridge.go('slowly place the bomb'), escape_pod)
+        self.assertEqual(the_bridge.go('throw bomb'), throw_the_bomb)
+        self.assertEqual(the_bridge.go('place bomb'), escape_pod)
 
         self.assertEqual(laser_weapon_armory.go('right_code'), the_bridge)
         self.assertEqual(laser_weapon_armory.go('wrong_code'), wrong_code)

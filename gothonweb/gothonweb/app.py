@@ -16,27 +16,29 @@ import lexis
 app = Flask(__name__)
 
 
-def load_session(username):
+def load_session(username: str) -> None:
+    # if it's not a new user - a game name is set
     if session.get('game'):
         pass
     else:
+        # set a game name
         session['game'] = 'gothonweb'
-    a = os.path.dirname(__file__)
-    c = session.get('game')
-    b = f"sessions/{username}_{c}.txt"
-    file_name = os.path.join(a, b)
-    user_exists = exists(file_name)
-    # create a user cookies file
-    if not user_exists:
-        with open(file_name, "w") as file:
+    file_path = os.path.dirname(__file__)
+    game_name = session.get('game')
+    path_end = f"sessions/{username}_{game_name}.txt"
+    session_path = os.path.join(file_path, path_end)
+    
+    # create a user's session file
+    if not exists(session_path):
+        with open(session_path, "w") as file:
             file.write('death_count = 0\nwin_count = 0\nroom_name = start_place')
-    # load session cookies from the file
-    with open(file_name, "r") as file:
+    # load data from a user's session file to the session
+    with open(session_path, "r") as file:
         session['death_count'] = int(file.readline().strip().strip('death_count = '))
         session['win_count'] = int(file.readline().strip().strip('win_count = '))
         session['room_name'] = file.readline().strip().replace('room_name = ', '')
 
-def save_session(username, game, death_count, win_count, room_name):
+def save_session(username: str, game: str, death_count: str, win_count: str, room_name: str) -> None:
     # read the session file data
     try:
         with open(os.path.join(os.path.dirname(__file__), f"sessions/{username}_{game}.txt"), "r") as file:
@@ -45,15 +47,16 @@ def save_session(username, game, death_count, win_count, room_name):
             line_list[1] = f"win_count = {win_count}\n"
             line_list[2] = f"room_name = {room_name}"
             new_lines = ''.join(line_list)
-        # make a new session file
+        # overwrite a session file
         with open(os.path.join(os.path.dirname(__file__), f"sessions/{username}_{game}.txt"), "w") as file:
             file.write(new_lines)
+    # if it's a new user
     except:
         load_session(session['username'])
 
-
 @app.route("/")
 def index():
+    # if it's not a new user
     if 'username' in session:
         username = session['username']
         load_session(username)
@@ -109,7 +112,8 @@ def change_a_game():
 
     lexis_file_name = f"lexis_{game_name}.py"
     lexis_file_name = lexis_file_name.replace(" ", "")
-
+    
+    # files paths
     new_planisphere_path = os.path.join(os.path.dirname(__file__), game_file_name)
     planisphere_path = os.path.join(os.path.dirname(__file__), 'planisphere.py')
     new_lexis_path = os.path.join(os.path.dirname(__file__), lexis_file_name)
