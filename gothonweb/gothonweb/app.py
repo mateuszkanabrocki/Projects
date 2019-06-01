@@ -5,6 +5,7 @@ from flask import render_template
 from flask import make_response
 from os.path import exists
 from shutil import copyfile
+
 this_module = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(this_module, '../gothonweb/'))
 
@@ -20,7 +21,10 @@ def load_session(username):
         pass
     else:
         session['game'] = 'gothonweb'
-    file_name = os.path.join(os.path.dirname(__file__), f"sessions/{username}_{session.get('game')}.txt")
+    a = os.path.dirname(__file__)
+    c = session.get('game')
+    b = f"sessions/{username}_{c}.txt"
+    file_name = os.path.join(a, b)
     user_exists = exists(file_name)
     # create a user cookies file
     if not user_exists:

@@ -3,8 +3,8 @@
 from planisphere_gothonweb import direction, do, stop, noun
 
 
-class ParserError(Exception):
-    pass
+# class ParserError(Exception):
+#     pass
 
 
 class Sentence(object):
@@ -73,7 +73,7 @@ def skip(word_list, word_type):
 
 def parse_do(word_list):
     # skip stop marks, numbers and again stop marks
-    # in case there is a stop mark following th nuumber
+    # in case there is a stop mark following the number
     skip(word_list, 'stop')
     skip(word_list, 'number')
     skip(word_list, 'stop')

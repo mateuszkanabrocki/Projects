@@ -169,18 +169,15 @@ start_place.add_paths({
 
 def load_room(name):
     white_list = ('start_place', 'door_pick', 'next_pick', 'door_3', 'door_2', 'door_1', 'the_end')
-    print('load room name', name)
     if name not in white_list:
         raise Exception(f'You can\'t run load_room with {name} as a parameter.')
     return globals().get(name)
 
 def name_room(room):
     white_list = ('start_place', 'door_pick', 'next_pick', 'door_3', 'door_2', 'door_1', 'the_end')
-    print("next_room", room)
-    print("next_room.name", room.name)
     # give room object get room name
     for key, value in globals().items():
         if value == room and key in white_list:
             return key
 
-    # raise Exception(f'You can\'t run name_room with {name} as a parameter.')
+    raise Exception(f'You can\'t run name_room with {name} as a parameter.')
