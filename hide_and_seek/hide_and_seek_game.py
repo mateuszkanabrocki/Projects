@@ -1,23 +1,19 @@
 from textwrap import dedent
-
 import random
-
 from os import system
-
 # freeze program execusion for specified time
 from time import sleep
-
 # get an OS name
 import platform
+from typing import Optional
 
 
 class GameEngine(object):
-
-    def __init__(self, map_of_locations):
+    # Map object not yet defined - should import it from another module instead
+    def __init__(self, map_of_locations) -> None: 
         self.map_of_locations = map_of_locations
 
-    def play(self):
-
+    def play(self) -> None:
         # begin with a starting location
         current_place = self.map_of_locations.first_place()
         next_place_name = current_place.enter()
@@ -32,8 +28,7 @@ class GameEngine(object):
 class Place(object):
 
     # clear IDLE window
-    def clear(self):
-
+    def clear(self) -> None:
         # for Windows
         if platform.system() == "Windows":
             system('cls')
@@ -45,8 +40,7 @@ class Place(object):
 
 class Rome(Place):
 
-    def enter(self):
-
+    def enter(self) -> str:
         self.clear()
         print(dedent("""
         It's 1963. We're in Roma, the city of ancient gods!
@@ -111,8 +105,7 @@ class Rome(Place):
 
 class Paris(Place):
 
-    def enter(self):
-
+    def enter(self) -> str:
         print(dedent("""
         Paris is a big city.
         Jeff has been looking for Bob for 7 years 54 days 5 hours
@@ -154,8 +147,7 @@ class Paris(Place):
 
 class Cafe(Place):
 
-    def enter(self):
-
+    def enter(self) -> str:
         print("\nSomebody run into Cafe.")
         sleep(2 * time)
         print(dedent("""
@@ -236,15 +228,15 @@ class Map(object):
         'Cafe': Cafe(),
     }
 
-    def __init__(self, starting_point):
+    def __init__(self, starting_point: str) -> None:
         self.starting_point = starting_point
 
     # run first location
-    def first_place(self):
+    def first_place(self) -> Optional[Place]:
         return self.next_place(self.starting_point)
 
     # run next location
-    def next_place(self, place_name):
+    def next_place(self, place_name: str) -> Optional[Place]:
         return Map.locations.get(place_name)
 
 

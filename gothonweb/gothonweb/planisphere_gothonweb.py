@@ -1,4 +1,3 @@
-import sys
 import os
 from typing import List, Dict, Union, Optional, Any
 
@@ -6,8 +5,9 @@ from typing import List, Dict, Union, Optional, Any
 this_module = os.path.dirname(os.path.realpath(__file__))
 planisphere_gothonweb_path = os.path.join(this_module, __file__)
 
-direction = [] # type: List[str]
-do = ['shoot', 'dodge', 'hit', 'kick', 'tell', 'throw', 'place', 'leave', 'kill']
+direction = []  # type: List[str]
+do = ['shoot', 'dodge', 'hit', 'kick', 'tell', 'throw', 'place',
+      'leave', 'kill']
 stop = ['the', 'in', 'of', 'from', 'at', 'it', 'a', 'him']
 noun = ['joke', 'bomb', 'gothon']
 
@@ -17,12 +17,12 @@ class Room(object):
     def __init__(self, name: str, description: str) -> None:
         self.name = name
         self.description = description
-        self.paths = {} # type: Dict[str, Room]
+        self.paths = {}  # type: Dict[str, Room]
 
-    def go(self, direction: str) -> Any: # Union[Room, None] throw Room not defined error
+    def go(self, direction: str) -> Any:  # Union[Room, None] throw error "Room not defined"
         return self.paths.get(direction, None)
 
-    def add_paths(self, paths: Any) -> None: # paths: Dict[str, Room] throw Room not defined error
+    def add_paths(self, paths: Any) -> None:  # paths: Dict[str, Room] throw error Room not defined
         self.paths.update(paths)
 
 
@@ -38,7 +38,7 @@ Gothon jumps out, red scaly skin, dark grimy teeth, and evil clown
 costume flowing around his hate filled body.  He's blocking the door to
 the Armory and about to pull a weapon to blast you.
 """)
-    
+
 
 laser_weapon_armory = Room("Laser Weapon Armory",
 """
@@ -178,8 +178,8 @@ start_place.add_paths({
 })
 
 laser_weapon_armory.add_paths({
-    'right_code': Map.dict['right_code'], # a testing cheat
-    'wrong_code': Map.dict['wrong_code'] # a testing cheat
+    'right_code': Map.dict['right_code'],  # a testing cheat
+    'wrong_code': Map.dict['wrong_code']  # a testing cheat
 })
 
 the_bridge.add_paths({
@@ -189,24 +189,30 @@ the_bridge.add_paths({
 })
 
 escape_pod.add_paths({
-    'right_pod': Map.dict['right_pod'], # a testing cheat
-    'wrong_pod': Map.dict['wrong_pod'] # a testing cheat
+    'right_pod': Map.dict['right_pod'],  # a testing cheat
+    'wrong_pod': Map.dict['wrong_pod']  # a testing cheat
 })
 
 START = 'start_place'
 
+
 def load_room(name: str) -> Optional[Any]:
-    white_list = ('start_place', 'laser_weapon_armory', 'the_bridge','escape_pod',
-                  'the_end_winner', 'wrong_pod', 'generic_death', 'throw_the_bomb',
+    white_list = ('start_place', 'laser_weapon_armory',
+                  'the_bridge', 'escape_pod',
+                  'the_end_winner', 'wrong_pod',
+                  'generic_death', 'throw_the_bomb',
                   'shoot', 'dodge', 'wrong_code')
 
     if name not in white_list:
         raise Exception(f'You can\'t run load_room with {name} as a parameter.')
     return globals().get(name)
 
+
 def name_room(room: Room) -> Union[str, Exception]:
-    white_list = ('start_place', 'laser_weapon_armory', 'the_bridge','escape_pod',
-                  'the_end_winner', 'wrong_pod', 'generic_death', 'throw_the_bomb',
+    white_list = ('start_place', 'laser_weapon_armory',
+                  'the_bridge', 'escape_pod',
+                  'the_end_winner', 'wrong_pod',
+                  'generic_death', 'throw_the_bomb',
                   'shoot', 'dodge', 'wrong_code')
 
     # give room object, get room name

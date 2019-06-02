@@ -1,21 +1,11 @@
 #lexis gothonweb
-
 from planisphere_gothonweb import direction, do, stop, noun
 from random import randint
 from app import session
+from typing import List, Tuple, Union, Optional
 
-
-class Sentence(object):
-
-    def __init__(self, subject, do, obj):
-        # take ('noun','princess') return 'princess'
-        self.subject = subject[1]
-        self.do = do[1]
-        self.object = obj[1]
-
-
-def scan(sentence):
-    if session.get('room_name') in 'laser_weapon_armory':
+def scan(sentence: str) -> Union[str, List[Tuple[str, Union[str, int]]]]:
+    if session.get('room_name') == 'laser_weapon_armory':
         try:
             type_code = int(sentence)
             right_code = randint(1, 3)
@@ -25,7 +15,7 @@ def scan(sentence):
                 return 'wrong_code'
         except:
             pass
-    elif session.get('room_name') in 'escape_pod':
+    elif session.get('room_name') == 'escape_pod':
         try:
             type_pod = int(sentence)
             right_pod = randint(1, 2)
@@ -43,9 +33,11 @@ def scan(sentence):
         sentence_cleaned = sentence_cleaned.replace(i, '')
     words_lowercase = sentence_cleaned.lower().split()
     words = sentence_cleaned.split()
-    lexicon = []
-    adress = -1
 
+    union_str_int = Union[str, int] # can't do List[Tuple[str, Union[str, int]]
+    lexicon = [] # type: List[Tuple[str, union_str_int]]
+
+    adress = -1
     for i in words_lowercase:
         adress += 1
         if i in direction:
@@ -65,7 +57,7 @@ def scan(sentence):
 
 
 # take ('noun','princess') return 'noun'
-def peek(word_list):
+def peek(word_list: List[Tuple[str, Union[str, int]]]) -> Optional[str]:
     if word_list:
         word = word_list[0]
         return word[0]
@@ -73,11 +65,10 @@ def peek(word_list):
         return None
 
 
-# take ('noun','princess') and 'noun' pop and return ('noun','princess')
-def match(word_list, expecting):
+# take ('noun','princess') and 'noun' return and pop ('noun','princess')
+def match(word_list: List[Tuple[str, Union[str, int]]], expecting: str) -> Optional[Tuple[str, Union[str, int]]]:
     if word_list:
         word = word_list.pop(0)
-
         if word[0] == expecting:
             return word
         else:
@@ -86,28 +77,16 @@ def match(word_list, expecting):
         return None
 
 
-def skip(word_list, word_type):
+def skip(word_list: List[Tuple[str, Union[str, int]]], word_type: str) -> List[Tuple[str, Union[str, int]]]:
+    # if next word is of the given word type
     while peek(word_list) == word_type:
         match(word_list, word_type)
     return word_list
 
-
-#currently not used
-def parse_subject(word_list):
-    skip(word_list, 'stop')
-    skip(word_list, 'number')
-    skip(word_list, 'error')
-    next_word = peek(word_list)
-
-    if next_word == 'noun':
-        return match(word_list, 'noun')
-    elif next_word == 'do':
-        return ('noun', 'player')
-
-
+# word_list: List[Tuple[str, Union[str, int]]] throw an error - shouldn't
 def parse_do(word_list):
     # Skip stop marks, numbers and again stop marks
-    # in case there is a stop mark following th number.
+    # in case there is a stop mark following the number.
     skip(word_list, 'stop')
     skip(word_list, 'number')
     skip(word_list, 'stop')
@@ -116,7 +95,7 @@ def parse_do(word_list):
     if peek(word_list) == 'do':
         return match(word_list, 'do')
 
-
+# word_list: List[Tuple[str, Union[str, int]]] throw an error - shouldn't
 def parse_object(word_list):
     skip(word_list, 'stop')
     skip(word_list, 'number')
@@ -129,7 +108,8 @@ def parse_object(word_list):
         return match(word_list, 'direction')
 
 
-def parse_sentence(word_list):
+def parse_sentence(word_list: Union[str, List[Tuple[str, Union[str, int]]]]): # -> str: gives an error
+    # see scan function (session.get('room_name') == 'laser_weapon_armory')
     if type(word_list) is str:
         return word_list
     else:
@@ -138,7 +118,6 @@ def parse_sentence(word_list):
 
         if obj is None:
             sentence_parsed = f'{do[1]}'
-            return sentence_parsed
         else:
             sentence_parsed = f'{do[1]} {obj[1]}'
-            return sentence_parsed
+        return sentence_parsed

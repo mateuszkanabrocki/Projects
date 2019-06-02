@@ -12,8 +12,8 @@ from os import system
 import platform
 # open URL in browser
 import webbrowser
-# quit the function
 from sys import exit
+from typing import Optional
 
 
 # clear IDLE window
@@ -26,14 +26,16 @@ def clear():
     else:
         system('clear')
 
-def open_URL():
+
+def open_URL() -> None:
     # open URL in default browser
-    #webbrowser.open(strURL_bu, new=1)
+    #webbrowser.open(strURL_bu, new=1) # to use unhash both lines
     #sleep(3*time)
     webbrowser.open(strURL_sense_fear, new=1)
     sleep(3*time)
 
-def begin_a_game():
+
+def begin_a_game() -> None:
     clear()
     input(f"Hi there {system_name} user.\n> ")
     sleep(time)
@@ -83,7 +85,8 @@ def begin_a_game():
     print("Imagine you're in a dark room with 3 doors.\n")
     sleep(2*time)
 
-def main_game():
+
+def main_game() -> None:
     # ask for a door number
     door_picked = pick_the_door()
 
@@ -98,8 +101,9 @@ def main_game():
     else:
         open_the_door(door_picked)
 
+
 # ask a user for a door number
-def pick_the_door():
+def pick_the_door() -> int:
     global first_choice
     clear()
     print("Which door do you choose?\n> ")
@@ -123,8 +127,9 @@ def pick_the_door():
 
     return door_picked
 
+
 # ask whether to knock the door or not
-def ask_to_knock():
+def ask_to_knock() -> Optional[bool]:
     knock = None
     while knock is None:
         # get user answer
@@ -152,7 +157,8 @@ def ask_to_knock():
 
         return knock
 
-def knock_the_door(door_picked):
+
+def knock_the_door(door_picked: int) -> None:
     # knock-knock joke
     clear()
     print("> Knock, knock\n> ", end="")
@@ -166,7 +172,8 @@ def knock_the_door(door_picked):
 
     open_the_door(door_picked)
 
-def open_the_door(door_picked):
+
+def open_the_door(door_picked: int) -> None:
     clear()
     print("(Unfortunately. This part will be covered in Polish.)")
     sleep(4*time)
@@ -255,6 +262,7 @@ def open_the_door(door_picked):
     else:
         # play again
         main_game()
+
 
 # get an OS name
 system_name = platform.system()
