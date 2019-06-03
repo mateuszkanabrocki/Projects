@@ -1,28 +1,106 @@
+# planisphere_gothonweb.py 2019-06-01
+# Author: Mateusz Kanabrocki <mateusz.kanabrocki@gmail.com>
+# Copyright: This module has been placed in the public domain
+# https://github.com/mateuszkanabrocki/projects
+
+"""
+This is the gothonweb game data module for a simple web browser
+text adventure game called gothonweb.
+This module defines the following:
+
+Functions:
+
+- `load_room(name: str) -> Optional[Any]:` return room object of given name
+- `name_room(room: Room) -> Union[str, Exception]:` return the name of the room
+   object if the object exists
+
+Classes:
+
+- `Room`, a single scene class
+- `Map`, maps Room class objects with strings
+
+
+How To Use This Module
+======================
+(See the individual classes, methods, attributes and functions for details.)
+
+This module is intended to by used only by the game engine module app.py.
+"""
+
+__docformat__ = 'restructuredtext'
+
 import os
-from typing import List, Dict, Union, Optional, Any
+from typing import Dict, Union, Optional, Any
 
 
 this_module = os.path.dirname(os.path.realpath(__file__))
 planisphere_gothonweb_path = os.path.join(this_module, __file__)
 
-direction = []  # type: List[str]
-do = ['shoot', 'dodge', 'hit', 'kick', 'tell', 'throw', 'place',
-      'leave', 'kill']
-stop = ['the', 'in', 'of', 'from', 'at', 'it', 'a', 'him']
-noun = ['joke', 'bomb', 'gothon']
-
 
 class Room(object):
 
+    """
+    This class represents a single scene of the text adventure game.
+
+    The object is initialized by giving the name and the description.
+    It may contain paths connecting user actions with other room objects
+    as the results of user actions.
+
+    Attributes
+    ----------
+    name : str
+        the name of the scene
+    description : str
+        the description of the scene
+    paths : Dict[str, Room]
+        connects user actions with resulting scenes
+
+    Methods
+    -------
+    go(self, direction: str) -> Any
+        return scene by given direction/action
+    add_paths(self, paths: Any) -> None
+        change paths attribute by appending a new 'path'
+    """
+
     def __init__(self, name: str, description: str) -> None:
+        """
+        Initialize a `Room` object
+
+        Parameters:
+
+        - `name`: a string, a name of the game scene
+        - `description`: a string, the scene description
+        """
+
         self.name = name
+        """Name of the scene."""
+
         self.description = description
+        """Description of the scene."""
+
         self.paths = {}  # type: Dict[str, Room]
+        """Map user actions with room objects (scenes)."""
 
     def go(self, direction: str) -> Any:  # Union[Room, None] throw error "Room not defined"
+        """Change scene by given direction (user action).
+
+         Parameters:
+
+        - `direction`: a string, a user's action
+        """
+
         return self.paths.get(direction, None)
 
     def add_paths(self, paths: Any) -> None:  # paths: Dict[str, Room] throw error Room not defined
+        """Change paths attribute by appending a new 'path' - user's actions
+        and it's results.
+
+         Parameters:
+
+        - `paths`: Dict[str, Room], connects user actions with scenes they result in
+        """
+
         self.paths.update(paths)
 
 
@@ -154,6 +232,17 @@ your body into jam jelly.
 
 class Map(object):
 
+    """
+    This class maps user actions with scenes this actions result in.
+
+    The object is initialized with no parameters.
+
+    Attributes
+    ----------
+    name : dictionary
+        maps str actions with room objects
+    """
+
     dict = {'shoot': shoot,
             'dodge': dodge,
             'tell a joke': laser_weapon_armory,
@@ -164,7 +253,7 @@ class Map(object):
             'slowly place the bomb': escape_pod,
             'right_pod': the_end_winner,
             'wrong_pod': wrong_pod
-           }
+            }
 
 
 start_place.add_paths({
@@ -178,8 +267,8 @@ start_place.add_paths({
 })
 
 laser_weapon_armory.add_paths({
-    'right_code': Map.dict['right_code'],  # a testing cheat
-    'wrong_code': Map.dict['wrong_code']  # a testing cheat
+    'right_code': Map.dict['right_code'],  # a testing cheat word
+    'wrong_code': Map.dict['wrong_code']  # a testing cheat word
 })
 
 the_bridge.add_paths({
@@ -189,26 +278,54 @@ the_bridge.add_paths({
 })
 
 escape_pod.add_paths({
-    'right_pod': Map.dict['right_pod'],  # a testing cheat
-    'wrong_pod': Map.dict['wrong_pod']  # a testing cheat
+    'right_pod': Map.dict['right_pod'],  # a testing cheat word
+    'wrong_pod': Map.dict['wrong_pod']  # a testing cheat word
 })
-
-START = 'start_place'
 
 
 def load_room(name: str) -> Optional[Any]:
+    """Return room object of given name.
+
+    Object of given name is returned if the name is a part of
+    a white_list list containing all room object possible to be used.
+
+    If the object of given name doesn't exist or do not belong to
+    the white_list - > return Exception
+
+    :param name: name of the scene (room)
+    :type name: str
+
+    :returns: scene
+    :rtype: class Room
+    """
+
     white_list = ('start_place', 'laser_weapon_armory',
                   'the_bridge', 'escape_pod',
                   'the_end_winner', 'wrong_pod',
                   'generic_death', 'throw_the_bomb',
                   'shoot', 'dodge', 'wrong_code')
 
-    if name not in white_list:
+    if name in white_list:
+        return globals().get(name)
+    else:
         raise Exception(f'You can\'t run load_room with {name} as a parameter.')
-    return globals().get(name)
 
 
 def name_room(room: Room) -> Union[str, Exception]:
+    """Return name of the given Room class object.
+
+    The name of the given Room class object is returned if the name
+    belongs to white_list list.
+
+    If given object name do not belong to the white_list - > return Exception
+
+    :param room: game scene
+    :type room: class Room
+
+    :returns: game scene name
+    :rtype: str
+    """
+
     white_list = ('start_place', 'laser_weapon_armory',
                   'the_bridge', 'escape_pod',
                   'the_end_winner', 'wrong_pod',

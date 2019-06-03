@@ -1,4 +1,4 @@
-### PyTest
+# PyTest
 # try: # used for unittest so it doesn't throw an error 'can't import pytest'
 #     import pytest
 # except:
@@ -8,12 +8,16 @@ import pytest
 from gothonweb.planisphere_gothonweb import *
 
 
+START = 'start_place'
+
+
 def test_room():
     gold = Room("GoldRoom",
                 """This room has gold in it you can grab. There's a
                 door to the north.""")
     assert gold.name == "GoldRoom"
     assert gold.paths == {}
+
 
 def test_room_paths():
     center = Room("Center", "Test room in the center.")
@@ -24,6 +28,7 @@ def test_room_paths():
 
     assert center.go('north') == north
     assert center.go('south') == south
+
 
 def test_map():
     start = Room("Start", "You can go west and down a hole.")
@@ -37,6 +42,7 @@ def test_map():
     assert start.go('west') == west
     assert start.go('west').go('east') == start
     assert start.go('down').go('up') == start
+
 
 def test_gothon_game_map():
     start_room = load_room(START)
@@ -55,9 +61,11 @@ def test_gothon_game_map():
     assert escape_pod.go('right_pod') == the_end_winner
     assert escape_pod.go('wrong_pod') == wrong_pod
 
+
 def test_name_room():
     assert name_room(start_place) == 'start_place'
     pytest.raises(Exception, name_room, 'something')
+
 
 def test_load_room():
     pytest.raises(Exception, load_room, 'something')

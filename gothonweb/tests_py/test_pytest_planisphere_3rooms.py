@@ -2,6 +2,9 @@ import pytest
 from gothonweb.planisphere_3rooms import *
 
 
+START = 'start_place'
+
+
 def test_room():
     gold = Room("GoldRoom",
                 """This room has gold in it you can grab. There's a

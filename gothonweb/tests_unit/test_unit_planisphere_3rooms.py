@@ -1,6 +1,10 @@
 import unittest
 from gothonweb.planisphere_3rooms import *
 
+
+START = 'start_place'
+
+
 class Test3RoomsPlanisphere(unittest.TestCase):
 
     def test_room(self):

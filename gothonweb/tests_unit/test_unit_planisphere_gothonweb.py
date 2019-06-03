@@ -1,6 +1,9 @@
-### UNIT TESTS
+# UNIT TESTS
 import unittest
 from gothonweb.planisphere_gothonweb import *
+
+START = 'start_place'
+
 
 class TestGothonPlanisphere(unittest.TestCase):
 
