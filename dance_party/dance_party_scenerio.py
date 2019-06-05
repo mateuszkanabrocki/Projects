@@ -1,3 +1,34 @@
+# dance_party_scenerio.py 2019-06-01
+# Author: Mateusz Kanabrocki <mateusz.kanabrocki@gmail.com>
+# Copyright: This module has been placed in the public domain
+# https://github.com/mateuszkanabrocki/projects
+
+"""
+A simple text adventure game called dance party game.
+This is the scenerio module, containing all game data run by engine module:
+
+Classes:
+
+- `Scene`, scene superclass
+- `GameIntro`, scene subclass, first scene
+- `Waiting`, scene subclass, waiting for a dance
+- `AskToDance`, scene subclass, asking to dance
+- `StartToDance`, scene subclass, starting to dance
+- `JustDance`, scene subclass, dancing
+- `LastScene`, scene subclass, last scene
+- `GameOver`, scene subclass, the end of the game
+- `Scenerio`, scenerio superclass
+- `ZoukScenerio`, scenerio subclass, map names to scene subclasses, run next scenes
+
+How To Use This Module
+======================
+(See the individual classes, methods, attributes and functions for details.)
+
+This module is intended to be run only by dance_party_game.py module.
+"""
+
+__docformat__ = 'restructuredtext'
+
 from textwrap import dedent
 import random
 from os import system
@@ -10,12 +41,34 @@ from typing import Optional
 
 class Scene(object):
 
+    """
+    This class is a superclass for all scene classes discribing game scenes.
+
+    The object can be initialized with no given parameters.
+
+    Attributes
+    ----------
+    time: int
+        a time variable for sleep function
+
+    Methods
+    -------
+    def clear(self) -> None
+        clear standard output
+    run(self) -> Optional[str]
+        retun default string 'no room'
+    """
+
     def __init__(self) -> None:
+        """Initialize a `Scene` object."""
+
         # set a time variable for sleep function
         self.time = 1
 
     # clear IDLE window
     def clear(self) -> None:
+        """Clear standard output."""
+
         # for Windows
         if platform.system() == "Windows":
             system('cls')
@@ -24,12 +77,28 @@ class Scene(object):
             system('clear')
 
     def run(self) -> Optional[str]:
+        """Retun default string 'no room'"""
+
         return 'no room'
 
 
 class GameIntro(Scene):
 
+    """
+    This class is a subclass of scene class and was the main
+    logic for one of the game scene.
+
+    The object can be initialized with no given parameters.
+
+    Methods
+    -------
+    def run(self) -> str
+        run the scene logic and return the name of the next scene
+    """
+
     def run(self) -> str:
+        """Run the scene logic and return the name of the next scene."""
+
         self.clear()
         print(dedent("""
             WARNING!!!
@@ -70,7 +139,21 @@ class GameIntro(Scene):
 
 class Waiting(Scene):
 
+    """
+    This class is a subclass of scene class and was the main
+    logic for one of the game scene.
+
+    The object can be initialized with no given parameters.
+
+    Methods
+    -------
+    def run(self) -> str
+        run the scene logic and return the name of the next scene
+    """
+
     def run(self) -> str:
+        """Run the scene logic and return the name of the next scene."""
+
         wait_number = 0
 
         while wait_number < 3:
@@ -108,7 +191,21 @@ class Waiting(Scene):
 
 class AskToDance(Scene):
 
+    """
+    This class is a subclass of scene class and was the main
+    logic for one of the game scene.
+
+    The object can be initialized with no given parameters.
+
+    Methods
+    -------
+    def run(self) -> str
+        run the scene logic and return the name of the next scene
+    """
+
     def run(self) -> str:
+        """Run the scene logic and return the name of the next scene."""
+
         while True:
             self.clear()
             answer = input((dedent("""
@@ -171,7 +268,21 @@ class AskToDance(Scene):
 
 class StartToDance(Scene):
 
+    """
+    This class is a subclass of scene class and was the main
+    logic for one of the game scene.
+
+    The object can be initialized with no given parameters.
+
+    Methods
+    -------
+    def run(self) -> str
+        run the scene logic and return the name of the next scene
+    """
+
     def run(self) -> str:
+        """Run the scene logic and return the name of the next scene."""
+
         try:
             while True:
                 for i in range(1, 5):
@@ -204,7 +315,21 @@ class StartToDance(Scene):
 
 class JustDance(Scene):
 
+    """
+    This class is a subclass of scene class and was the main
+    logic for one of the game scene.
+
+    The object can be initialized with no given parameters.
+
+    Methods
+    -------
+    def run(self) -> str
+        run the scene logic and return the name of the next scene
+    """
+
     def just_dancing(self) -> None:
+        """Run the dancing part of the game."""
+
         moves = {
             'a': "Going into laterall!",
             'b': "Now a little bit of crusado...",
@@ -237,6 +362,8 @@ class JustDance(Scene):
                 pass
 
     def run(self) -> str:
+        """Run the scene logic and return the name of the next scene."""
+
         print(dedent("""
                 Ok. Here we go. Just keep the rhythm, listen to the music,
                 watch the dance floor and lead the steps."""))
@@ -322,6 +449,18 @@ class JustDance(Scene):
 
 class LastScene(Scene):
 
+    """
+    This class is a subclass of scene class and was the main
+    logic for one of the game scene.
+
+    The object can be initialized with no given parameters.
+
+    Methods
+    -------
+    def run(self) -> str
+        run the scene logic and return the name of the next scene
+    """
+
     def run(self) -> None:
         print(dedent("""
                     You did it! The song finished and you're alive!
@@ -331,17 +470,59 @@ class LastScene(Scene):
 
 class GameOver(Scene):
 
+    """
+    This class is a subclass of scene class and was the main
+    logic for one of the game scene.
+
+    The object can be initialized with no given parameters.
+
+    Methods
+    -------
+    def run(self) -> str
+        run the scene logic and return the name of the next scene
+    """
+
     def run(self) -> None:
+        """Run the scene logic and return the name of the next scene."""
+
         print("\nIt could be better. But at least you tried!")
 
 
 class Scenerio(object):
 
-    def __init__(self, first_scene_name) -> None:
+    """
+    This class is a scenerio superclass.
+
+    The object can be initialized with no given parameters.
+    """
+
+    def __init__(self, first_scene_name: str) -> None:
+        """Initialize the Scenerio object with given first scene name.
+
+         Parameters:
+
+        - `first_scene_nameo`: str, the name of the first game
+           scene - mapped to the first Scene subclass
+        """
+
         self.current_scene_name = first_scene_name
 
 
 class ZoukScenerio(Scenerio):
+
+    """
+    This class is a scenerio subclass mapping game names with
+    game scene classes.
+
+    Method next_scene is used to get a new scene name.
+
+    The object can be initialized with no given parameters.
+
+    Methods
+    -------
+    def next_scene(self) -> Optional[str]
+        return next scene name
+    """
 
     # assign scenes to strings
     scenerio = {
@@ -356,6 +537,8 @@ class ZoukScenerio(Scenerio):
 
     # run next scene, return following scene name
     def next_scene(self) -> Optional[str]:
+        """Return next scene name."""
+
         try:
             self.current_scene_name = ZoukScenerio.scenerio.get(self.current_scene_name).run()
             return self.current_scene_name

@@ -1,3 +1,29 @@
+# hide_and_seek.py 2019-06-01
+# Author: Mateusz Kanabrocki <mateusz.kanabrocki@gmail.com>
+# Copyright: This module has been placed in the public domain
+# https://github.com/mateuszkanabrocki/projects
+
+"""
+A simple text adventure game called hide and seek.
+
+Classes:
+
+- `GameEngine`, game engine class
+- `Place`, superclass for scene classes
+- `Rome`, Place subclass, first part of the game
+- `Paris`, Place subclass, second part of the game
+- `Cafe`, Place subclass, third part of the game
+- `Map`, map parts of the game with it's names, set next part of the game
+
+How To Use This Module
+======================
+(See the individual classes, methods, attributes and functions for details.)
+
+This is a single module game.
+"""
+
+__docformat__ = 'restructuredtext'
+
 from textwrap import dedent
 import random
 from os import system
@@ -9,11 +35,36 @@ from typing import Optional
 
 
 class GameEngine(object):
+
+    """
+    This is a game engine class.
+
+    The object can be initialized with given Map class object.
+
+    Attributes
+    ----------
+    map_of_locations: class Map
+        map parts of the game with it's names, set next part of the game
+
+    Methods
+    -------
+    def play(self) -> None:
+        run next game scenes - game engine function
+    """
+
     # Map object not yet defined - should import it from another module instead
-    def __init__(self, map_of_locations) -> None: 
+    def __init__(self, map_of_locations) -> None:
+        """Initialize a `GameEngine` object.
+        
+        :param map_of_locations: map parts of the game with it's names, set next part of the game
+        :type door_picked: class Map
+        """
+
         self.map_of_locations = map_of_locations
 
     def play(self) -> None:
+        """Run next game scenes - game engine function."""
+
         # begin with a starting location
         current_place = self.map_of_locations.first_place()
         next_place_name = current_place.enter()
@@ -26,9 +77,18 @@ class GameEngine(object):
 
 
 class Place(object):
+    """Scenes superclass.
+    
+    Methods
+    -------
+    def clear(self) -> None:
+        clear standard output
+    """
 
     # clear IDLE window
     def clear(self) -> None:
+        """Clear standard output"""
+
         # for Windows
         if platform.system() == "Windows":
             system('cls')
@@ -39,8 +99,17 @@ class Place(object):
 
 
 class Rome(Place):
+    """First part of the game.
+    
+    Methods
+    -------
+    def enter(self) -> str:
+        begin this part of the game
+    """
 
     def enter(self) -> str:
+        """Begin this part of the game."""
+
         self.clear()
         print(dedent("""
         It's 1963. We're in Roma, the city of ancient gods!
@@ -104,8 +173,17 @@ class Rome(Place):
 
 
 class Paris(Place):
+    """Second part of the game.
+    
+    Methods
+    -------
+    def enter(self) -> str:
+        begin this part of the game
+    """
 
     def enter(self) -> str:
+        """Begin this part of the game."""
+
         print(dedent("""
         Paris is a big city.
         Jeff has been looking for Bob for 7 years 54 days 5 hours
@@ -146,8 +224,17 @@ class Paris(Place):
 
 
 class Cafe(Place):
+    """Third part of the game.
+    
+    Methods
+    -------
+    def enter(self) -> str:
+        begin this part of the game
+    """
 
     def enter(self) -> str:
+        """Begin this part of the game."""
+
         print("\nSomebody run into Cafe.")
         sleep(2 * time)
         print(dedent("""
@@ -221,6 +308,20 @@ class Cafe(Place):
 
 
 class Map(object):
+    """Map parts of the game with it's names, set next part of the game.
+    
+        Attributes
+    ----------
+    starting_point: str
+        name of the starting scene
+
+    Methods
+    -------
+    def first_place(self) -> Optional[Place]
+        run starting game scene
+    def next_place(self, place_name: str) -> Optional[Place]:
+        run next game scene
+    """
 
     locations = {
         'Rome': Rome(),
@@ -229,14 +330,32 @@ class Map(object):
     }
 
     def __init__(self, starting_point: str) -> None:
+        """Initialize a `Map` object.
+        
+        :param mstarting_point: name of the starting scene
+        :type door_picked: str
+        """
+
         self.starting_point = starting_point
 
     # run first location
     def first_place(self) -> Optional[Place]:
+        """Run starting game scene.
+        
+        :returns: staring scene
+        :rtype: Place subclass
+        """
+
         return self.next_place(self.starting_point)
 
     # run next location
     def next_place(self, place_name: str) -> Optional[Place]:
+        """Run next game scene.
+        
+        :returns: next game scene
+        :rtype: Place subclass
+        """
+
         return Map.locations.get(place_name)
 
 

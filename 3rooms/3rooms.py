@@ -1,8 +1,34 @@
-# -*- coding: utf-8 -*-
+# 3rooms.py 2019-06-01
+# Author: Mateusz Kanabrocki <mateusz.kanabrocki@gmail.com>
+# Copyright: This module has been placed in the public domain
+# https://github.com/mateuszkanabrocki/projects
 
+"""
+A simple text adventure game called 3rooms.
+
+Functions:
+
+- `clear`, clear the standard output
+- `open_URL`, open hardcoded url in the default browser
+- `begin_a_game`, first part of the game
+- `main_game`, main part of the game
+- `pick_the_door`, ask user to pick the door
+- `ask_to_knock`, ask user whether to knock the door or not
+- `knock_the_door`, knock the door part
+- `open_the_door`, open the door get into the room
+
+How To Use This Module
+======================
+(See the individual classes, methods, attributes and functions for details.)
+
+This is a single module game.
+"""
+
+__docformat__ = 'restructuredtext'
+
+# -*- coding: utf-8 -*-
 # in case o 'unicode error':
 # export PYTHONIOENCODING=UTF-8
-
 
 # freeze program for specified time
 from time import sleep
@@ -18,6 +44,8 @@ from typing import Optional
 
 # clear IDLE window
 def clear():
+    """Clear the standard output."""
+
     # for Windows
     if system_name == "Windows":
         system('cls')
@@ -28,7 +56,8 @@ def clear():
 
 
 def open_URL() -> None:
-    # open URL in default browser
+    """Open hardcoded url in the default browser."""
+
     #webbrowser.open(strURL_bu, new=1) # to use unhash both lines
     #sleep(3*time)
     webbrowser.open(strURL_sense_fear, new=1)
@@ -36,6 +65,8 @@ def open_URL() -> None:
 
 
 def begin_a_game() -> None:
+    """First part of the game."""
+
     clear()
     input(f"Hi there {system_name} user.\n> ")
     sleep(time)
@@ -87,6 +118,8 @@ def begin_a_game() -> None:
 
 
 def main_game() -> None:
+    """Main part of the game. Game engine function."""
+
     # ask for a door number
     door_picked = pick_the_door()
 
@@ -104,6 +137,12 @@ def main_game() -> None:
 
 # ask a user for a door number
 def pick_the_door() -> int:
+    """Ask user to pick the door.
+
+    :return: picked door number
+    :rtype: int
+    """
+
     global first_choice
     clear()
     print("Which door do you choose?\n> ")
@@ -130,6 +169,12 @@ def pick_the_door() -> int:
 
 # ask whether to knock the door or not
 def ask_to_knock() -> Optional[bool]:
+    """Ask user whether to knock the door or not.
+
+    :return: user decision - to knock or not
+    :rtype: bool
+    """
+
     knock = None
     while knock is None:
         # get user answer
@@ -159,6 +204,12 @@ def ask_to_knock() -> Optional[bool]:
 
 
 def knock_the_door(door_picked: int) -> None:
+    """A knock-kncok joke scene.
+
+    :param door_picked: picked door number
+    :type door_picked: int
+    """
+
     # knock-knock joke
     clear()
     print("> Knock, knock\n> ", end="")
@@ -174,6 +225,12 @@ def knock_the_door(door_picked: int) -> None:
 
 
 def open_the_door(door_picked: int) -> None:
+    """Open the picked door.
+
+    :param door_picked: picked door number
+    :type door_picked: int
+    """
+
     clear()
     print("(Unfortunately. This part will be covered in Polish.)")
     sleep(4*time)
@@ -287,7 +344,5 @@ strURL_sense_fear = "https://drive.google.com/file/d/1xkDTRZA3Fsm1gGJVFFlNfFq_85
 time = 1
 
 first_choice = True
-
 begin_a_game()
-
 main_game()
