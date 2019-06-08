@@ -9,22 +9,23 @@ This is the scenerio module, containing all game data run by engine module:
 
 Classes:
 
-- `Scene`, scene superclass
-- `GameIntro`, scene subclass, first scene
-- `Waiting`, scene subclass, waiting for a dance
-- `AskToDance`, scene subclass, asking to dance
-- `StartToDance`, scene subclass, starting to dance
-- `JustDance`, scene subclass, dancing
-- `LastScene`, scene subclass, last scene
-- `GameOver`, scene subclass, the end of the game
-- `Scenerio`, scenerio superclass
-- `ZoukScenerio`, scenerio subclass, map names to scene subclasses, run next scenes
+- `Scene`, superclass for scenes
+- `GameIntro`, Scene subclass, first scene
+- `Waiting`, Scene subclass, waiting for a dance scene
+- `AskToDance`, Scene subclass, asking to dance scene
+- `StartToDance`, Scene subclass, starting to dance scene
+- `JustDance`, Scene subclass, dancing scene
+- `LastScene`, Scene subclass, last scene scene
+- `GameOver`, Scene subclass, the end of the game scene
+- `Scenerio`, superclass for scenerios
+- `ZoukScenerio`, Scenerio subclass, map names to scene objects
+   and run next scenes
 
 How To Use This Module
 ======================
 (See the individual classes, methods, attributes and functions for details.)
 
-This module is intended to be run only by dance_party_game.py module.
+This module is intended to be run only by the dance_party_game.py module.
 """
 
 __docformat__ = 'restructuredtext'
@@ -32,40 +33,38 @@ __docformat__ = 'restructuredtext'
 from textwrap import dedent
 import random
 from os import system
-# freeze program execusion for specified time
-from time import sleep
-# get an OS name
-import platform
+from time import sleep  # freeze program execusion for specified time
+import platform  # get an OS type name
 from typing import Optional
 
 
 class Scene(object):
 
     """
-    This class is a superclass for all scene classes discribing game scenes.
+    This class is a superclass for all scene objects.
 
     The object can be initialized with no given parameters.
 
     Attributes
     ----------
     time: int
-        a time variable for sleep function
+        time variable for sleep function
 
     Methods
     -------
     def clear(self) -> None
         clear standard output
     run(self) -> Optional[str]
-        retun default string 'no room'
+        return 'no room'
     """
 
     def __init__(self) -> None:
         """Initialize a `Scene` object."""
 
-        # set a time variable for sleep function
+        # set a time variable for a sleep function
         self.time = 1
 
-    # clear IDLE window
+    # clear terminal output
     def clear(self) -> None:
         """Clear standard output."""
 
@@ -77,7 +76,7 @@ class Scene(object):
             system('clear')
 
     def run(self) -> Optional[str]:
-        """Retun default string 'no room'"""
+        """Return 'no room'."""
 
         return 'no room'
 
@@ -85,10 +84,10 @@ class Scene(object):
 class GameIntro(Scene):
 
     """
-    This class is a subclass of scene class and was the main
-    logic for one of the game scene.
+    This class is a Scene subclass and has a part fo the game logic
+    for one of the game scene.
 
-    The object can be initialized with no given parameters.
+    No need to initialized an object.
 
     Methods
     -------
@@ -104,46 +103,41 @@ class GameIntro(Scene):
             WARNING!!!
             This game is not for the people with weak nerves...
             """))
-
         sleep(2*self.time)
         self.clear()
         print(dedent("""
-                    Today you are Jeff. Recently you've started attending
-                    dancing class, brazilian zouk classes more precisely .
-                    (it's a dance in couples like salsa or tango)
+                    You are Jeff. Recently you've started attending
+                    dancing class. More precisely brazilian zouk classes.
+                    (you dance it in couple like salsa or tango)
 
-                    You were always scared of dancing. That's why you
-                    started attending these classes. You're doing pretty
-                    fine but you're still a little a bit shy when
-                    it's a bout dancing in the party.
+                    You were always afraid of dancing. That's why you
+                    started attending learn how to dance. You're doing
+                    pretty well but you're still a little bit shy when
+                    it comes dancing at the party.
 
-                    Finally, your friend encouraged you to go to one.
-
-                    Damn, you're scared like a little mouse!
+                    Finally, your friend encouraged you to go to
+                    your first one.
                     """), end="")
-
         sleep(3*self.time)
         print(dedent("""
-                    But here you are in Pick&Roll Club latino party
-                    saturday night! It's 11 p.m.. There is stil only
-                    a few people around.
-                    That's good. The less the better, right?
+                    So here you are in the Pick&Roll Club latino party
+                    saturday night! Saturday night! It's 11 p.m.
+                    There is still only a few people on the dance floor.
 
-                    You hear the song rhytm going like:
+                    You can hear the song beat:
                     buuum  cik cik...
                     buuum  cik cik...
                     """))
-
         return 'waiting'
 
 
 class Waiting(Scene):
 
     """
-    This class is a subclass of scene class and was the main
-    logic for one of the game scene.
+    This class is a Scene subclass and has a part fo the game logic
+    for one of the game scene.
 
-    The object can be initialized with no given parameters.
+    No need to initialized an object.
 
     Methods
     -------
@@ -155,20 +149,18 @@ class Waiting(Scene):
         """Run the scene logic and return the name of the next scene."""
 
         wait_number = 0
-
         while wait_number < 3:
-            wait = input("\nWanna wait for the next song?\n(yes/no)\n> ")
+            wait = input("\nDo you want to wait for the next song?\n(yes/no)\n> ")
             self.clear()
-
             if 'yes' in wait:
                 print("\nLet's wait. Waiting is cool.\n")
                 sleep(3*self.time)
                 wait_number += 1
                 print(random.choice([
                                     "This song is pretty fast.",
-                                    "Ahh, it's Kizomba...",
-                                    "Ahh, it's Bachata...",
-                                    "Ahh, it's Salsa...",
+                                    "It's Kizomba...",
+                                    "It's Bachata...",
+                                    "It's Salsa...",
                                     "I don't know this song.",
                                     "I don't like this song.",
                                     "This song is really slow."
@@ -177,14 +169,12 @@ class Waiting(Scene):
                 return 'ask_to_dance'
             else:
                 pass
-
         self.clear()
         print(dedent("""
-                    You've been waiting so long for the better song
-                    that finally some girl asked you to dance.
-
+                    You've been hesitating for a long time now.
+                    Finally some girl grabs your hand
+                    and drag you on the dance floor.
                     """))
-
         sleep(5*self.time)
         return 'start_to_dance'
 
@@ -192,10 +182,10 @@ class Waiting(Scene):
 class AskToDance(Scene):
 
     """
-    This class is a subclass of scene class and was the main
-    logic for one of the game scene.
+    This class is a Scene subclass and has a part fo the game logic
+    for one of the game scene.
 
-    The object can be initialized with no given parameters.
+    No need to initialized an object.
 
     Methods
     -------
@@ -209,12 +199,11 @@ class AskToDance(Scene):
         while True:
             self.clear()
             answer = input((dedent("""
-                    Ok. Finally you've found enough courage to get yourself
-                    on the dance floor. Good for you!
+                    Ok. Finally you decide to ask for a dance. Good for you!
 
-                    Your eyes found a girl at the bar waiting for the dance.
-                    You are slowly walking in her direction. She starts to look
-                    at you too.
+                    Your eyes catch a girl sitting at the bar.
+                    You are slowly walking in her direction.
+                    She catches your sight.
 
                     What do you do next?
 
@@ -231,32 +220,29 @@ class AskToDance(Scene):
                 self.clear()
                 said_list = said.split()
 
-                for i in range(len(said_list)):
+                for word in said_list:
                     print(random.choice([
-                        (f"buuum {said_list[i]}!"),
-                        (f"cik {said_list[i]}!")
+                        (f"buuum {word}!"),
+                        (f"cik {word}!")
                                         ]), end="")
-                print("\n(The music is too loud!)\n")
+                print("\n(The music is too loud!)\nIt's hard to hear anything.\n")
                 sleep(5*self.time)
-
             elif answer == 'b':
                 sleep(2*self.time)
                 self.clear()
                 print(dedent("""
-                            You've been looking at her so long
-                            she got scared and run.
+                            You've been looking at her for over 5 minutes
+                            she got scared and run out of the club.
 
-                            Happens...
-                            Let's wait for another song then.
+                            Well...
+                            Let's wait for another song.
                             """))
                 sleep(1*self.time)
-
                 return 'waiting'
-
             elif answer == 'c':
                 sleep(1*self.time)
                 self.clear()
-                print("You are safe now.\n")
+                print("You are safe now!\n")
                 sleep(1*self.time)
                 return 'waiting'
             elif answer == 'd':
@@ -269,10 +255,10 @@ class AskToDance(Scene):
 class StartToDance(Scene):
 
     """
-    This class is a subclass of scene class and was the main
-    logic for one of the game scene.
+    This class is a Scene subclass and has a part fo the game logic
+    for one of the game scene.
 
-    The object can be initialized with no given parameters.
+    No need to initialized an object.
 
     Methods
     -------
@@ -285,41 +271,34 @@ class StartToDance(Scene):
 
         try:
             while True:
-                for i in range(1, 5):
+                for i in range(4):
                     self.clear()
                     print(dedent(f"""
-                                Ok. Here we are on the dance floor.
-                                Now, just to start in rhythm.
-
+                                Ok. Here you are on the dance floor.
+                                Now, listen to the song and to start on 1.
                                 Music is quite fast.
 
-                                Try to move on 1.
-
                                 {i}
-                                (press 'Ctrl + C' to move)
+                                (Press 'Ctrl + C' to make a first step.)
                                 """))
-
                     sleep(1*self.time)
-
         except KeyboardInterrupt:
             self.clear()
             print(f"You moved on {i}!")
-
             if i != 1:
-                print("Not the best start...\n", end="")
+                print("It wasn't the best way to start a dance...\n", end="")
             else:
-                print("Great job!")
-
+                print("In time! Great job!")
         return 'just_dance'
 
 
 class JustDance(Scene):
 
     """
-    This class is a subclass of scene class and was the main
-    logic for one of the game scene.
+    This class is a Scene subclass and has a part fo the game logic
+    for one of the game scene.
 
-    The object can be initialized with no given parameters.
+    No need to initialized an object.
 
     Methods
     -------
@@ -339,8 +318,8 @@ class JustDance(Scene):
                 }
 
         print(dedent("""
-                    Ok, the steps.
-                    I need to dance some other steps now.
+                    Ok, remember the steps.
+                    I can't dance basic step all the time.
 
                     What should I dance now?
 
@@ -366,27 +345,25 @@ class JustDance(Scene):
 
         print(dedent("""
                 Ok. Here we go. Just keep the rhythm, listen to the music,
-                watch the dance floor and lead the steps."""))
+                and watch the dance floor."""))
         sleep(2*self.time)
         self.just_dancing()
-
         while True:
             self.clear()
             to_do = input(dedent("""
-                                Oh no! While doing a turn girl's hair
-                                tungled around my neck!
-                                I can't breath!
+                                Oh no! While leading a turn girl's hair
+                                tungled around your neck!
+                                You can't breath!
 
-                                What should I do now?
+                                What should You do now?
 
                                 a) turn her again
-                                b) turn myself closkwise
-                                c) turn myself counterclockwise
+                                b) turn yourself closkwise
+                                c) turn yourself counterclockwise
 
                                 (type a, b, or c)
                                 """))
             worse = None
-
             if to_do == 'a':
                 self.clear()
                 print("You fainted.\nNice try though!")
@@ -394,7 +371,7 @@ class JustDance(Scene):
             elif to_do == 'b':
                 if worse is None:
                     print("\nOh no! Not in this direction!",
-                          "It's getting worse!")
+                          "It's getting even worse!")
                     sleep(4*self.time)
                     worse = True
                 else:
@@ -415,13 +392,13 @@ class JustDance(Scene):
             self.clear()
             to_do = input(dedent("""
                                 Watch out!
-                                One couple is moving very fast towards us.
-                                They can't see us!
+                                One couple is moving very fast towards you
+                                and they can't see you!
 
-                                What should I do now?
+                                What should you do now?
 
-                                a) step in the their way to block them and
-                                    rescue the girl you're dancing with
+                                a) step in their way to rescue
+                                   rescue the girl you're dancing with!
                                 b) jump to the left!
 
                                 (type a or b)
@@ -430,19 +407,16 @@ class JustDance(Scene):
                 print(dedent("""
                             You step in the couple's way.
                             They hit you like a tornado,
-                            but you're girl is safe!
-
-                            That hurt."""))
+                            but the girl you're dancing with is safe!
+                            """))
                 sleep(3*self.time)
                 return 'last_scene'
-
             elif to_do == 'b':
                 print(dedent("""
-                            You jump to the left like lion!
-                            You avoided the dangerous couple
-                            but youbumped into another one.")
-
-                            That hurt."""))
+                            You jump to the left like a monkey!
+                            You avoid the dangerous couple
+                            but you bump into another one."
+                            """))
                 sleep(3*self.time)
                 return 'last_scene'
 
@@ -450,10 +424,10 @@ class JustDance(Scene):
 class LastScene(Scene):
 
     """
-    This class is a subclass of scene class and was the main
-    logic for one of the game scene.
+    This class is a Scene subclass and has a part fo the game logic
+    for one of the game scene.
 
-    The object can be initialized with no given parameters.
+    No need to initialized an object.
 
     Methods
     -------
@@ -471,10 +445,10 @@ class LastScene(Scene):
 class GameOver(Scene):
 
     """
-    This class is a subclass of scene class and was the main
-    logic for one of the game scene.
+    This class is a Scene subclass and has a part fo the game logic
+    for one of the game scene.
 
-    The object can be initialized with no given parameters.
+    No need to initialized an object.
 
     Methods
     -------
@@ -512,7 +486,7 @@ class ZoukScenerio(Scenerio):
 
     """
     This class is a scenerio subclass mapping game names with
-    game scene classes.
+    the game scene classes.
 
     Method next_scene is used to get a new scene name.
 
@@ -524,7 +498,6 @@ class ZoukScenerio(Scenerio):
         return next scene name
     """
 
-    # assign scenes to strings
     scenerio = {
         'game_intro': GameIntro(),
         'waiting': Waiting(),
@@ -535,12 +508,14 @@ class ZoukScenerio(Scenerio):
         'game_over': GameOver()
     }
 
-    # run next scene, return following scene name
     def next_scene(self) -> Optional[str]:
         """Return next scene name."""
 
-        try:
-            self.current_scene_name = ZoukScenerio.scenerio.get(self.current_scene_name).run()
-            return self.current_scene_name
-        except:
-            raise Exception("There is no next scene.")
+        if self.current_scene_name is not None:
+            try:
+                # ignore mypy error as it's 'try' block
+                self.current_scene_name = ZoukScenerio.scenerio.get(self.current_scene_name).run() 
+                return self.current_scene_name
+            except:
+                raise Exception("There is no next scene.")
+            return None

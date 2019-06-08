@@ -5,11 +5,12 @@
 
 """
 A simple text adventure game called dance party game.
-This is the engine module, which defines the following:
+This is the engine module responsible for the main game logic.
+This module defines the following:
 
 Classes:
 
-- `Engine`, download game scenerio module and scenes from scenerio module.
+- `Engine`, downloads game scenerio module and scenes from the scenerio module.
 
 How To Use This Module
 ======================
@@ -34,30 +35,34 @@ class Engine(object):
     Attributes
     ----------
     scenerio: class Scenerio
-        class containing all game data run by engine
+        class containing game data run by the engine
 
     Methods
     -------
     def download(self, scenerio: ZoukScenerio) -> None
-        download game scenerio data from the scenerio module
+        download game scenerio data from the Scenerio class
+        and save it as scenerio attribute
     play(self) -> None
-        run the game
+        run the game using the downloaded game scenerio
     """
 
-    # download a scenerio and scenes
     def download(self, scenerio: ZoukScenerio) -> None:
-        """Download game scenerio data from the scenerio module.
+        """Download game scenerio data.
 
-         Parameters:
+        Save the game scenerio data from the object ZoukScenerio
+        of the Scenerio class and save it as scenerio attribute.
 
-        - `scenerio`: class Scenerio, class containing all game data run by engine
+        Parameters:
+
+        - `scenerio`: class Scenerio, class containing all the game data needed
+           to run the game
         """
 
         self.scenerio = scenerio
 
     # play a game
     def play(self) -> None:
-        """Run the game."""
+        """Run the game using the downloaded game scenerio."""
 
         next_game_name = None
 
@@ -68,11 +73,8 @@ class Engine(object):
         exit()
 
 
-# create a ZoukScenerio object with default scene object
+# create a ZoukScenerio object with first scene name
 zouk_scenerio = ZoukScenerio('game_intro')
-# create a game engine object
 zouk_engine = Engine()
-# change so you get a name and the Scenerio class is imported from other file
 zouk_engine.download(zouk_scenerio)
-# run the game
 zouk_engine.play()
