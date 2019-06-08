@@ -513,9 +513,11 @@ class ZoukScenerio(Scenerio):
 
         if self.current_scene_name is not None:
             try:
-                # ignore mypy error as it's 'try' block
+                # ignore mypy error as it's a 'try' block
                 self.current_scene_name = ZoukScenerio.scenerio.get(self.current_scene_name).run() 
                 return self.current_scene_name
-            except:
+            except AttributeError:
                 raise Exception("There is no next scene.")
             return None
+        else:
+            raise Exception('No current scene.')
