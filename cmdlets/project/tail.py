@@ -1,36 +1,53 @@
-#! /usr/bin/env python3
+#!/usr/bin/env python3.6
 
 from sys import argv, exit, stdin
+
+# example of usage:
 # history | ./tail -25
+# ./tail.py -100 file.txt
+# ls -l | ./tail.py -100 file.txt
 
 
-def arguments(argv):
+# return number of lines to be tailed
+def count_lines(argv):
     try:
-        lines_num = int(argv[1].strip('-'))
-        return lines_num
-    except IndexError:
-        print('Number of lines not gien.')
+        count = int(argv[1].strip('-'))
+        return count
+    except (IndexError, ValueError):
+        print('Number of lines not given.')
         exit(1)
 
 
-def main():
-    count = arguments(argv)
+# tail lines from the stdinput and then from the given files
+def search_input(argv):
+    lines = []
+    # check if there is some data at stdin:
+    if not stdin.isatty():
+        for line in stdin.readlines():
+            lines.append(line)
+    # check if files are given
     if len(argv) > 2:
         try:
-            lines = []
             for file in argv[2:]:
                 with open(file, 'r') as f:
                     for line in f.readlines():
                         lines.append(line)
         except FileNotFoundError:
-            print('File not found.')
+            print(f"File '{file}' not found.")
             exit(1)
-    else:
-        lines = stdin.readlines()
+    return lines
 
-    result_lines = lines[-count:]
-    for line in result_lines:
+
+# print given count of lines to stdout
+def print_lines(lines, count):
+    for line in lines[-count:]:
         print(line.strip('\n'))
+
+
+def main():
+    count = count_lines(argv)
+    lines = search_input(argv)
+    print_lines(lines, count)
 
 
 if __name__ == '__main__':
