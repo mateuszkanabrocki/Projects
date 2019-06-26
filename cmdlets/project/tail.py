@@ -26,7 +26,7 @@ def search_input(argv):
         for line in stdin.readlines():
             lines.append(line)
     # check if files are given
-    if len(argv) > 2:
+    elif len(argv) > 2:
         try:
             for file in argv[2:]:
                 with open(file, 'r') as f:

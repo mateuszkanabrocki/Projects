@@ -1,57 +1,63 @@
-#! /usr/bin/env python3
-
-
+#!/usr/bin/env python3.6
 import argparse
-from sys import exit, stdin
 import re
+from sys import exit, stdin
 
 
 def parse():
-    help = "This module works like a sed cmdlet but it's much simpler and less functional."
+    help = "This module works like a simple sed cmdlet."
     parser = argparse.ArgumentParser(description=help)
-    parser.add_argument('parameters', type=str, help='command parameters')
-    parser.add_argument('file', type=str, help='a file to search in')
+    parser.add_argument('parameters', type=str, help='parsing parameters e.g s/old/new/g')
+    parser.add_argument('file', type=str, help='an input file', nargs='*', default=None)
     args = parser.parse_args()
-    # print(args, '\n')
+    print(args, '\n')  # used for debugging
     return args
 
 
-def open_file(file):
+def open_files(in_file):
+    lines = []
+    for file in in_file:
+        try:
+            with open(file, 'r', errors='ignore') as text_file:
+                # lines.append(line for line in text_file.readlines())  # ??
+                for line in text_file.readlines():
+                    lines.append(line.strip('\n'))
+        except FileNotFoundError:
+            print(f'No file {file} found.')
+            exit(1)
+        text = "\n".join(lines)
+        return text
+
+
+def get_arguments(args):
+    in_file = args.file
+    arguments = args.parameters.strip("'").split("/")  # 's/old/new/g' or 's/old/new/'
     try:
-        with open(file, 'r', errors='ignore') as file:
-            lines = []
-            for line in file.readlines():
-                lines.append(line.strip('\n'))
-            return lines
-    except FileNotFoundError:
-        print('No file found.')
+        s_flag, old, new, g_flag = arguments[0:4]
+        # print(s_flag, old, new, g_flag, file)
+    except ValueError:
+        print('Not enough parameters.\nExample: ./sed.py s/old/new/g or without g-flag: just ./sed.py s/old/new/g')
         exit(1)
+    return s_flag, old, new, g_flag, in_file
+
+
+def get_std_in():
+    lines = []
+    for line in stdin.readlines():
+        lines.append(line.strip('\n'))
+        text = "\n".join(lines)
+    return text
 
 
 def sed(args):
-    parameters = args.parameters.strip("'").strip("/").split("/")
-    old = parameters[1]
-    try:
-        new = parameters[2]
-    except IndexError:
-        parameters.append('')
-        new = parameters[2]
-    if len(parameters) < 3:
-        print('Not enough parameters.')
-        exit(1)
-    if args.file == '-':
-        lines = stdin.readlines()
-        new_lines = []
-        for line in lines:
-            new_lines.append(re.sub(old, new, line.strip('\n')))
-            result_text = '\n'.join(new_lines)
-        print(result_text)
+    s_flag, old, new, g_flag, in_file = get_arguments(args)
+    # if file given
+    if in_file:
+        text = open_files(in_file)
     else:
-        lines = open_file(args.file)
-        text = '\n'.join(lines)
-        new_lines = re.sub(old, new, text)
-        with open(args.file, 'w', errors='ignore') as file:
-            file.write(new_lines)
+        text = get_std_in()
+    new_text = re.sub(old, new, text)
+    print(new_text)
 
 
 def main():

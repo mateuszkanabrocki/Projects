@@ -1,0 +1,32 @@
+poniedziałek
+******
+tasks:
+1 on a paper!			http://elementsofprogramminginterviews.com/sample/epilight_python_new.pdf,
+read 1					https://realpython.com/python-coding-interview-tips/
+read 3 a day!			https://www.edureka.co/blog/interview-questions/python-interview-questions/
+
+only 45min a day!
+cmdlet:
+work over each cmdlet to make it better
+make a library from all the tools - put them in a single module to be able to import this module and use it's functions (cmdlets)
+add tests
+add type hinting
+add documentation
+ - tail - add file option as an alternative to stdin - if no input found
+ - the same with sed
+ - improve sed
+ - read mre about argparse
+wtorek
+try again to make a count_bits script
+do it using modulo
+
+
+make an alias for adding a task for the day - running script that modifies the txt file
+
+24.06.2019
+0
+
+poniedziałek
+work a little over run_chart
+
+check is and  ==

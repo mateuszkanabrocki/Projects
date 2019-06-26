@@ -1,6 +1,4 @@
-#! /usr/bin/env python3
-
-
+#!/usr/bin/env python3
 import argparse
 from sys import exit, stdin
 
@@ -8,7 +6,7 @@ from sys import exit, stdin
 def parse():
     help = "This module works like a cut cmdlet but it's much simpler and less functional."
     parser = argparse.ArgumentParser(description=help)
-    parser.add_argument('file', type=str, help='a file to search in')
+    parser.add_argument('file', type=str, help='an input file', nargs='*', default=None)
     parser.add_argument('-d', type=str, help='a character to separate columns of data', default='   ')
     parser.add_argument('-f', help='number of column to be displayed')
     args = parser.parse_args()
