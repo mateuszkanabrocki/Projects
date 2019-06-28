@@ -25,8 +25,9 @@ def open_files(in_file):
         except FileNotFoundError:
             print(f'No file {file} found.')
             exit(1)
-        text = "\n".join(lines)
-        return text
+        # text = "\n".join(lines)
+        # return text
+        return lines
 
 
 def get_arguments(args):
@@ -34,7 +35,7 @@ def get_arguments(args):
     arguments = args.parameters.strip("'").split("/")  # 's/old/new/g' or 's/old/new/'
     try:
         s_flag, old, new, g_flag = arguments[0:4]
-        # print(s_flag, old, new, g_flag, file)
+        print(s_flag, old, new, g_flag, in_file)
     except ValueError:
         print('Not enough parameters.\nExample: ./sed.py s/old/new/g or without g-flag: just ./sed.py s/old/new/g')
         exit(1)
@@ -45,19 +46,26 @@ def get_std_in():
     lines = []
     for line in stdin.readlines():
         lines.append(line.strip('\n'))
-        text = "\n".join(lines)
-    return text
+        # text = "\n".join(lines)
+    # print('lines: ', lines)
+    # return text
+    return lines
 
 
 def sed(args):
     s_flag, old, new, g_flag, in_file = get_arguments(args)
     # if file given
     if in_file:
-        text = open_files(in_file)
+        # text = open_files(in_file)
+        lines = open_files(in_file)
     else:
-        text = get_std_in()
-    new_text = re.sub(old, new, text)
-    print(new_text)
+        # text = get_std_in()
+        lines = get_std_in()
+    print('!!!', old, new)
+    for line in lines:
+    # new_text = re.sub(old, new, text)
+        print(re.sub(old, new, line))
+    # print(new_text)
 
 
 def main():
