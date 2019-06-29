@@ -1,9 +1,9 @@
 How to run this:
 
 example:
-history | ./tail.py -10 | ./sed.py "s/^[ 0-9]*//g" | ./cut.py -d ' ' -f 1 - | ./sort.py - | ./uniq.py
+history | ./tail.py -10 | ./sed.py "s/^[ 0-9]*//" | ./cut.py -d ' ' -f 1,3 | ./sort.py - | ./uniq.py
 
-There are scripts names/paths
+Existing scripts:
 ./tail.py
 ./sed.py
 ./cut.py
