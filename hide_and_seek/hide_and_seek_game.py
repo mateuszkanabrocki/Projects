@@ -22,15 +22,16 @@ How To Use This Module
 This is a single module game.
 """
 
-__docformat__ = 'restructuredtext'
+__docformat__ = "restructuredtext"
 
-from textwrap import dedent
-import random
-from os import system
-# freeze program execusion for specified time
-from time import sleep
 # get an OS name
 import platform
+import random
+from os import system
+from textwrap import dedent
+
+# freeze program execusion for specified time
+from time import sleep
 from typing import Optional
 
 
@@ -69,7 +70,7 @@ class GameEngine(object):
         current_place = self.map_of_locations.first_place()
         next_place_name = current_place.enter()
 
-        while next_place_name != 'finished':
+        while next_place_name != "finished":
             current_place = self.map_of_locations.next_place(next_place_name)
             next_place_name = current_place.enter()
 
@@ -91,11 +92,11 @@ class Place(object):
 
         # for Windows
         if platform.system() == "Windows":
-            system('cls')
+            system("cls")
 
         # for Mac and Linux
         else:
-            system('clear')
+            system("clear")
 
 
 class Rome(Place):
@@ -111,17 +112,25 @@ class Rome(Place):
         """Begin this part of the game."""
 
         self.clear()
-        print(dedent("""
+        print(
+            dedent(
+                """
         It's 1963. We're in Roma, the city of ancient gods!
         Today also in the world sport center.
         These are the last days of the Olimpics Games
-        and we're about to begin the hide and seek final competition."""))
+        and we're about to begin the hide and seek final competition."""
+            )
+        )
         sleep(2 * time)
-        print(dedent("""
+        print(
+            dedent(
+                """
         We have two hide-seekers who made their way to the final.
         As a hiker: Bob McBobber from Englang.
         As a seeker: Jeff Jefftyjeff from USA,
-        which is in America."""))
+        which is in America."""
+            )
+        )
         sleep(2 * time)
         print("(start to count from 10 to 0)")
 
@@ -130,9 +139,13 @@ class Rome(Place):
             count = input(">  ")
 
             if count != str(number):
-                print(dedent("""
+                print(
+                    dedent(
+                        """
                 Oh no! Jeff didn't practise his counting!
-                Now he has to start again!"""))
+                Now he has to start again!"""
+                    )
+                )
                 sleep(1 * time)
                 print("(start to count from 10 to 0)")
                 number = 10
@@ -152,24 +165,30 @@ class Rome(Place):
 
         while not decided:
 
-            if 'look around' in answer:
+            if "look around" in answer:
                 decided = True
                 self.clear()
-                print(dedent("""
+                print(
+                    dedent(
+                        """
                 Jeff spent 2 years 65 days 34 minutes and 21 seconds
                 looking for Bob in Rome. Then decided to fly to Paris and look Bob there
-                as he knew Bob has a family there."""))
+                as he knew Bob has a family there."""
+                    )
+                )
                 sleep(2 * time)
 
-            elif 'fly to Paris' in answer:
+            elif "fly to Paris" in answer:
                 self.clear()
                 decided = True
 
             else:
                 self.clear()
-                answer = input("What will Jeff do?\n('look around' / 'fly to Paris')\n> ")
+                answer = input(
+                    "What will Jeff do?\n('look around' / 'fly to Paris')\n> "
+                )
 
-        return 'Paris'
+        return "Paris"
 
 
 class Paris(Place):
@@ -184,15 +203,23 @@ class Paris(Place):
     def enter(self) -> str:
         """Begin this part of the game."""
 
-        print(dedent("""
+        print(
+            dedent(
+                """
         Paris is a big city.
         Jeff has been looking for Bob for 7 years 54 days 5 hours
         14 minutes and 2 seconds.
-        He could't find him anywhere."""))
+        He could't find him anywhere."""
+            )
+        )
         sleep(2 * time)
-        print(dedent("""
+        print(
+            dedent(
+                """
         Jeff started getting tired so he decided to take a break
-        and have a drink at the nearest bar."""))
+        and have a drink at the nearest bar."""
+            )
+        )
         sleep(2 * time)
         print("But then he saw some shadow moving behind the tree...\n")
         sleep(2 * time)
@@ -202,25 +229,29 @@ class Paris(Place):
 
         while not decided:
 
-            if 'yes' in answer:
+            if "yes" in answer:
                 decided = True
                 self.clear()
-                print(dedent("""
+                print(
+                    dedent(
+                        """
                 Jeff pointed his finger at the tree
                 and shouted: Bob behind the tree!
-                """))
+                """
+                    )
+                )
                 sleep(2 * time)
                 print("It was just a wind!\nAh, so close...")
                 sleep(3 * time)
 
-            elif 'no' in answer:
+            elif "no" in answer:
                 decided = True
 
             else:
                 self.clear()
                 answer = input("Was it Bob?!\n(yes/no)\n> ")
 
-        return 'Cafe'
+        return "Cafe"
 
 
 class Cafe(Place):
@@ -237,74 +268,96 @@ class Cafe(Place):
 
         print("\nSomebody run into Cafe.")
         sleep(2 * time)
-        print(dedent("""
+        print(
+            dedent(
+                """
         Jeff looked and the door. A smile appeared on his face
-        He slowly entered the bar."""))
+        He slowly entered the bar."""
+            )
+        )
         sleep(2 * time)
-        print(dedent("""
+        print(
+            dedent(
+                """
         It was a dark and a crowded place. Great to hide.
-        Yes! Bob must be somewhere here."""))
+        Yes! Bob must be somewhere here."""
+            )
+        )
         sleep(2 * time)
 
-        places_to_hide = ['kitchen', 'downstairs', 'behind the bar']
+        places_to_hide = ["kitchen", "downstairs", "behind the bar"]
         bob_hide = random.choice(places_to_hide)
-        answer = input("Where is he hiding?\n(kitchen / downstairs / behind the bar)\n> ")
+        answer = input(
+            "Where is he hiding?\n(kitchen / downstairs / behind the bar)\n> "
+        )
         found = False
 
         while not found:
 
-            if 'kitchen' in answer:
+            if "kitchen" in answer:
                 self.clear()
                 print("Jeff: Bob in a kitchen!")
                 sleep(2 * time)
 
-                if bob_hide == 'kitchen':
+                if bob_hide == "kitchen":
                     break
 
                 else:
                     print("There is no Bob in a kitchen!")
                     sleep(2 * time)
-                    answer = input("\nWhere is he?\n(kitchen / downstairs / behind the bar)\n> ")
+                    answer = input(
+                        "\nWhere is he?\n(kitchen / downstairs / behind the bar)\n> "
+                    )
 
-            elif 'downstairs' in answer:
+            elif "downstairs" in answer:
                 self.clear()
                 print("Jeff: Bob downstairs!")
                 sleep(2 * time)
 
-                if bob_hide == 'downstairs':
+                if bob_hide == "downstairs":
                     break
 
                 else:
                     print("There is no Bob downstairs!")
                     sleep(2 * time)
-                    answer = input("\nWhere is he?\n(kitchen / downstairs / behind the bar)\n> ")
+                    answer = input(
+                        "\nWhere is he?\n(kitchen / downstairs / behind the bar)\n> "
+                    )
 
-            elif 'behind the bar' in answer:
+            elif "behind the bar" in answer:
                 self.clear()
                 print("Jeff: Bob behind the bar!")
                 sleep(2 * time)
 
-                if bob_hide == 'behind the bar':
+                if bob_hide == "behind the bar":
                     break
 
                 else:
                     print("There is no Bob behind the bar!")
                     sleep(2 * time)
-                    answer = input("\nWhere is he?\n(kitchen / downstairs / behind the bar)\n> ")
+                    answer = input(
+                        "\nWhere is he?\n(kitchen / downstairs / behind the bar)\n> "
+                    )
 
             else:
                 self.clear()
-                answer = input("\nWhere is he?\n(kitchen / downstairs / behind the bar)\n> ")
+                answer = input(
+                    "\nWhere is he?\n(kitchen / downstairs / behind the bar)\n> "
+                )
 
         self.clear()
-        print(dedent("""
+        print(
+            dedent(
+                """
         You found Bob!
         You broke the world record in hide and seek
         by 3 years 5 days 2 hours 30 minutes and 3 seconds!
         Great job Jeff!
-        """))
+        """
+            )
+        )
 
-        return 'finished'
+        return "finished"
 
 
 class Map(object):
@@ -323,11 +376,7 @@ class Map(object):
         run next game scene
     """
 
-    locations = {
-        'Rome': Rome(),
-        'Paris': Paris(),
-        'Cafe': Cafe(),
-    }
+    locations = {"Rome": Rome(), "Paris": Paris(), "Cafe": Cafe()}
 
     def __init__(self, starting_point: str) -> None:
         """Initialize a `Map` object.
@@ -362,7 +411,7 @@ class Map(object):
 # time increment for sleep function
 time = 1
 # initiate location map for the game
-map_of_locations = Map('Rome')
+map_of_locations = Map("Rome")
 # initiate a game engine
 game = GameEngine(map_of_locations)
 # play a game

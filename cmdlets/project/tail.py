@@ -11,10 +11,10 @@ from sys import argv, exit, stdin
 # return number of lines to be tailed
 def count_lines(argv):
     try:
-        count = int(argv[1].strip('-'))
+        count = int(argv[1].strip("-"))
         return count
     except (IndexError, ValueError):
-        print('Number of lines not given.')
+        print("Number of lines not given.")
         exit(1)
 
 
@@ -29,7 +29,7 @@ def search_input(argv):
     elif len(argv) > 2:
         try:
             for file in argv[2:]:
-                with open(file, 'r') as f:
+                with open(file, "r") as f:
                     for line in f.readlines():
                         lines.append(line)
         except FileNotFoundError:
@@ -41,7 +41,7 @@ def search_input(argv):
 # print given count of lines to stdout
 def print_lines(lines, count):
     for line in lines[-count:]:
-        print(line.strip('\n'))
+        print(line.strip("\n"))
 
 
 def main():
@@ -50,5 +50,5 @@ def main():
     print_lines(lines, count)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -5,16 +5,16 @@ except ImportError:
 
 
 setup(
-    name='gothonweb',
-    version='2.0',
-    description='Simple text-based game run in the web browser.',
-    author='Mateusz Kanabrocki',
-    author_email='mateusz.kanabrocki@gmail.com',
-    packages=['gothonweb'],  #same as name
-    install_requires=['nose'], #external packages as dependencies
-    url='https://github.com/mateuszkanabrocki/projects/tree/master/gothonweb',
-    download_url='https://github.com/mateuszkanabrocki/projects/tree/master/gothonweb',
-    include_package_data=True #include MANIFEST.in file
+    name="gothonweb",
+    version="2.0",
+    description="Simple text-based game run in the web browser.",
+    author="Mateusz Kanabrocki",
+    author_email="mateusz.kanabrocki@gmail.com",
+    packages=["gothonweb"],  # same as name
+    install_requires=["nose"],  # external packages as dependencies
+    url="https://github.com/mateuszkanabrocki/projects/tree/master/gothonweb",
+    download_url="https://github.com/mateuszkanabrocki/projects/tree/master/gothonweb",
+    include_package_data=True  # include MANIFEST.in file
     # 'py_modules': ['MODULE_NAME'],
     # 'scripts': [],
 )

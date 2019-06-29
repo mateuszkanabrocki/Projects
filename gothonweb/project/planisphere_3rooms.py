@@ -27,9 +27,9 @@ How To Use This Module
 This module is intended to by used only by the game engine module app.py.
 """
 
-__docformat__ = 'restructuredtext'
+__docformat__ = "restructuredtext"
 
-from typing import Dict, Union, Optional, Any
+from typing import Any, Dict, Optional, Union
 
 
 class Room(object):
@@ -57,6 +57,7 @@ class Room(object):
     add_paths(self, paths: Any) -> None
         change paths attribute by appending a new 'path'
     """
+
     def __init__(self, name: str, description: str) -> None:
         """
         Initialize a `Room` object
@@ -76,7 +77,9 @@ class Room(object):
         self.paths = {}  # type: Dict[str, Room]
         """Map user actions with room objects (scenes)."""
 
-    def go(self, direction: str) -> Any:  # Union[Room, None] throw error "Room not defined"
+    def go(
+        self, direction: str
+    ) -> Any:  # Union[Room, None] throw error "Room not defined"
         """Change scene by given direction (user action).
 
          Parameters:
@@ -86,7 +89,9 @@ class Room(object):
 
         return self.paths.get(direction, None)
 
-    def add_paths(self, paths: Any) -> None:  # paths: Dict[str, Room] throw error Room not defined
+    def add_paths(
+        self, paths: Any
+    ) -> None:  # paths: Dict[str, Room] throw error Room not defined
         """Change paths attribute by appending a new 'path' - user's actions
         and it's results.
 
@@ -98,24 +103,29 @@ class Room(object):
         self.paths.update(paths)
 
 
-start_place = Room('Welcome!',
-"""
+start_place = Room(
+    "Welcome!",
+    """
 Hi there. Welcome to this simple text adventure game.
 Are you ready to play?
-""")
+""",
+)
 
 
-door_pick = Room('Pick the door', 
-"""
+door_pick = Room(
+    "Pick the door",
+    """
 Imagine you're in a dark room with 3 doors.
 Which door do you choose?
 
 Pick wisely...
-""")
+""",
+)
 
 
-door_1 = Room('Room no. 1', 
-"""
+door_1 = Room(
+    "Room no. 1",
+    """
 (Unfortunately this part will be covered in Polish)
 
 Wchodzisz do pierwszego pokoju.
@@ -129,11 +139,13 @@ Jak nazywa się ten kot?
 
 
 Do you want to stay with a cat or exit the room?
-""")
+""",
+)
 
 
-door_2 = Room('Room no. 2', 
-"""
+door_2 = Room(
+    "Room no. 2",
+    """
 (Unfortunately this part will be covered in Polish)
 
 Wchodzisz do drugiego pokoju.
@@ -153,11 +165,13 @@ Co mówi ślepy koń na wyścigach z przeszkodami?
 
 
 Do you want to stay here or exit the room?
-""")
+""",
+)
 
 
-door_3 = Room('Room no. 3', 
-"""
+door_3 = Room(
+    "Room no. 3",
+    """
 (Unfortunately this part will be covered in Polish)
 
 Wchodzisz do trzeciego pokoju.
@@ -176,21 +190,26 @@ Jak nazywa się pies złomiarza?
 
 
 Do you want to stay here or exit the room?
-""")
+""",
+)
 
 
-next_pick = Room('Another pick?', 
-"""
+next_pick = Room(
+    "Another pick?",
+    """
 Do you want to visit another room
 or leave the game?
-""")
+""",
+)
 
 
-the_end = Room('Happy Ending', 
-"""
+the_end = Room(
+    "Happy Ending",
+    """
 Hope you enjoyed the game
 Have a nice day!
-""")
+""",
+)
 
 
 class Map(object):
@@ -206,53 +225,67 @@ class Map(object):
         maps str actions with room objects
     """
 
-    dict = {'door_pick': door_pick,
-            'door_1': door_1,
-            'door_2': door_2,
-            'door_3': door_3,
-            'next_pick': next_pick,
-            'the_end': the_end
-           }
+    dict = {
+        "door_pick": door_pick,
+        "door_1": door_1,
+        "door_2": door_2,
+        "door_3": door_3,
+        "next_pick": next_pick,
+        "the_end": the_end,
+    }
 
-door_1.add_paths({
-    'quit': Map.dict['next_pick'],
-    'leave': Map.dict['next_pick'],
-    'exit': Map.dict['next_pick']
-})
 
-door_2.add_paths({
-    'quit': Map.dict['next_pick'],
-    'leave': Map.dict['next_pick'],
-    'exit': Map.dict['next_pick']
-})
+door_1.add_paths(
+    {
+        "quit": Map.dict["next_pick"],
+        "leave": Map.dict["next_pick"],
+        "exit": Map.dict["next_pick"],
+    }
+)
 
-door_3.add_paths({
-    'quit': Map.dict['next_pick'],
-    'leave': Map.dict['next_pick'],
-    'exit': Map.dict['next_pick']
-})
+door_2.add_paths(
+    {
+        "quit": Map.dict["next_pick"],
+        "leave": Map.dict["next_pick"],
+        "exit": Map.dict["next_pick"],
+    }
+)
 
-next_pick.add_paths({
-    'leave': Map.dict['the_end'],
-    'yes': Map.dict['the_end'],
-    'visit': Map.dict['door_pick'],
-    'room': Map.dict['door_pick']
-})
+door_3.add_paths(
+    {
+        "quit": Map.dict["next_pick"],
+        "leave": Map.dict["next_pick"],
+        "exit": Map.dict["next_pick"],
+    }
+)
 
-door_pick.add_paths({
-    '1': Map.dict['door_1'],
-    'one': Map.dict['door_1'],
-    '2': Map.dict['door_2'],
-    'two': Map.dict['door_2'],
-    '3': Map.dict['door_3'],
-    'three': Map.dict['door_3']
-})
+next_pick.add_paths(
+    {
+        "leave": Map.dict["the_end"],
+        "yes": Map.dict["the_end"],
+        "visit": Map.dict["door_pick"],
+        "room": Map.dict["door_pick"],
+    }
+)
 
-start_place.add_paths({
-    'yes': Map.dict['door_pick'],
-    'ready': Map.dict['door_pick'],
-    'go': Map.dict['door_pick']
-})
+door_pick.add_paths(
+    {
+        "1": Map.dict["door_1"],
+        "one": Map.dict["door_1"],
+        "2": Map.dict["door_2"],
+        "two": Map.dict["door_2"],
+        "3": Map.dict["door_3"],
+        "three": Map.dict["door_3"],
+    }
+)
+
+start_place.add_paths(
+    {
+        "yes": Map.dict["door_pick"],
+        "ready": Map.dict["door_pick"],
+        "go": Map.dict["door_pick"],
+    }
+)
 
 
 def load_room(name: str) -> Optional[Any]:
@@ -271,9 +304,17 @@ def load_room(name: str) -> Optional[Any]:
     :rtype: class Room
     """
 
-    white_list = ('start_place', 'door_pick', 'next_pick', 'door_3', 'door_2', 'door_1', 'the_end')
+    white_list = (
+        "start_place",
+        "door_pick",
+        "next_pick",
+        "door_3",
+        "door_2",
+        "door_1",
+        "the_end",
+    )
     if name not in white_list:
-        raise Exception(f'You can\'t run load_room with {name} as a parameter.')
+        raise Exception(f"You can't run load_room with {name} as a parameter.")
     return globals().get(name)
 
 
@@ -292,9 +333,17 @@ def name_room(room: Room) -> Union[str, Exception]:
     :rtype: str
     """
 
-    white_list = ('start_place', 'door_pick', 'next_pick', 'door_3', 'door_2', 'door_1', 'the_end')
+    white_list = (
+        "start_place",
+        "door_pick",
+        "next_pick",
+        "door_3",
+        "door_2",
+        "door_1",
+        "the_end",
+    )
     # give room object get room name
     for key, value in globals().items():
         if value == room and key in white_list:
             return key
-    raise Exception(f'You can\'t run name_room with {room} as a parameter.')
+    raise Exception(f"You can't run name_room with {room} as a parameter.")

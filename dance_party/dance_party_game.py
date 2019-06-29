@@ -19,9 +19,10 @@ How To Use This Module
 Run this module in the default project directory configuration.
 """
 
-__docformat__ = 'restructuredtext'
+__docformat__ = "restructuredtext"
 
 from sys import exit
+
 from dance_party_scenerio import ZoukScenerio
 
 
@@ -66,7 +67,7 @@ class Engine(object):
 
         next_game_name = None
 
-        while next_game_name not in ('game_over', 'last_scene'):
+        while next_game_name not in ("game_over", "last_scene"):
             next_game_name = self.scenerio.next_scene()
 
         self.scenerio.next_scene()
@@ -74,7 +75,7 @@ class Engine(object):
 
 
 # create a ZoukScenerio object with first scene name
-zouk_scenerio = ZoukScenerio('game_intro')
+zouk_scenerio = ZoukScenerio("game_intro")
 zouk_engine = Engine()
 zouk_engine.download(zouk_scenerio)
 zouk_engine.play()

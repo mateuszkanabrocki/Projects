@@ -1,0 +1,78 @@
+****************
+1. work on cmdltes - only 45 min
+2. read 3 a day! https://www.edureka.co/blog/interview-questions/python-interview-questions/
+3. read 1 https://realpython.com/python-coding-interview-tips/
+4. 1 task on a paper! https://www.interviewcake.com/python-interview-questions
+5. add 2 questions from doc pytn notes 
+
+help axamples - on terminal
+ctrl+shift c/v - terminal
+read about Lufthanza
+send CV to Maciek
+cleaning - browser, docs, desktop
+ BS
+sGs
+******
+sobota
+
+1. 1
+2. 2
+3. 3
+4. 
+
+
+14:30
+papryka czerwona, pieczarki, cukinia, sok pomarańczowy, orzechy włoskie
+
+
+    c continue execution
+    n step to the next line within the same function
+    s step to the next line in this function or a called function (step into def function)
+    q quit the debugger/execution
+	? for tutorial
+	l or list - current place
+
+breakpoint()
+import pdb; pdb.set_trace()
+pdb.pm
+
+PYTHONBREAKPOINT=0
+
+pip3.7 install web-pdb
+PYTHONBREAKPOINT=web_pdb.set_trace
+
+
+
+
+
+
+
+only 45min a day!
+cmdlet:
+work over each cmdlet to make it better
+make a library from all the tools - put them in a single module to be able to import this module and use it's functions (cmdlets)
+add tests
+add type hinting
+add documentation
+ - tail - add file option as an alternative to stdin - if no input found
+ - the same with sed
+ - improve sed
+ - read mre about argparse
+ 
+sobota
+lufthanza
+try again to make a count_bits script
+do it using modulo
+https://inventwithpython.com/blog/2018/02/05/python-tuples-are-immutable-except-when-theyre-mutable/
+
+poniedziałek
+cv sii?
+
+
+
+
+
+poniedziałek
+work a little over run_chart
+
+

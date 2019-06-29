@@ -5,16 +5,16 @@ except ImportError:
 
 
 setup(
-    name='_tests.py',
-    version='1.0',
-    description='Modules working like simple cmdlets.',
-    author='Mateusz Kanabrocki',
-    author_email='mateusz.kanabrocki@gmail.com',
-    packages=['cmdlets'],  #same as name
-    install_requires=['nose'], #external packages as dependencies
-    url='https://github.com/mateuszkanabrocki/projects/tree/master/?',
-    download_url='https://github.com/mateuszkanabrocki/projects/tree/master/?',
-    include_package_data=True #include MANIFEST.in file
+    name="_tests.py",
+    version="1.0",
+    description="Modules working like simple cmdlets.",
+    author="Mateusz Kanabrocki",
+    author_email="mateusz.kanabrocki@gmail.com",
+    packages=["cmdlets"],  # same as name
+    install_requires=["nose"],  # external packages as dependencies
+    url="https://github.com/mateuszkanabrocki/projects/tree/master/?",
+    download_url="https://github.com/mateuszkanabrocki/projects/tree/master/?",
+    include_package_data=True  # include MANIFEST.in file
     # 'py_modules': ['MODULE_NAME'],
     # 'scripts': [],
 )
