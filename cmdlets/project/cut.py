@@ -2,36 +2,41 @@
 import argparse
 from sys import exit, stdin
 
+#  ./cut.py file -d ' ' -f 1,3
+#  ./cut.py file -d ',' -f 1-2
+#  ./cut.py -d ',' -f 1-2
+#  ls -l | ./tail.py -5 | sed 's/  \+/ /g' | ./cut.py -d " " -f 1,9
+
 
 def parse():
-    #  ./cut.py file -d ' ' -f 1,3
-    #  ./cut.py file -d ',' -f 1-2
-    #  ./cut.py -d ',' -f 1-2
-    # , type=int, choices=range(10)
-    help = "This module works like a simple cut terminal command."
+    help = "This module works like a simple cut shell command."
     parser = argparse.ArgumentParser(description=help)
-    parser.add_argument("file", type=str, help="an input file", nargs="*", default=None)
+    parser.add_argument(
+        "file",
+        type=str,
+        help="an input file",
+        nargs="*", default=None
+    )
     parser.add_argument(
         "-d",
         type=str,
         help="a character to separate the columns of data",
-        default="   ",
+        default="   "
     )
-    parser.add_argument("-f", help="number of a column to be displayed")
+    parser.add_argument("-f", help="number of a columns to be displayed")
     args = parser.parse_args()
     print(args, "\n")
-    breakpoint()
     return args
 
 
-def read_file(file):
-    try:
-        # polish signs - how to use them?
-        with open(file, "r", errors="ignore") as f:
-            lines = f.readlines()
-    except FileNotFoundError:
-        print("No file found.")
-        exit(1)
+def read_file(files):
+    for file in files:
+        try:
+            with open(file, "r", errors="ignore") as f:
+                lines = [line.strip('\n') for line in f.readlines()]
+        except FileNotFoundError:
+            print("No file found.")
+            exit(1)
     return lines
 
 
@@ -50,26 +55,25 @@ def display(lines, args):
             raise SyntaxError(
                 "f-flag syntax examples: -f 1-2, -f 1,3 (only positive numbers)"
             )
+    print()
     for line in lines:
         words = line.split(args.d)
         try:
             for index in columns_num:
                 print(words[index - 1], end=" ")
-            print()
         except IndexError:
-            print()
             continue
+        print()
+    print()
 
 
 def main():
     args = parse()
     lines = []
     if args.file:
-        text = read_file(args.file)
-        for line in text:
-            lines.append(line.strip("\n"))
+        lines = read_file(args.file)
     else:
-        lines = stdin.readlines()
+        lines = [line.strip('\n') for line in stdin.readlines()]
     display(lines, args)
 
 
