@@ -1,2 +1,5 @@
-old
-old dd old
+-rwxrwxr-x 1 mateusz mateusz 1408 Jun 29 18:44 sort.py
+-rwxrwxr-x 1 mateusz mateusz 1271 Jun 29 18:44 tail.py
+-rw-rw-r-- 1 mateusz mateusz 4 Jun 29 21:09 test1
+-rw-rw-r-- 1 mateusz mateusz 883 Jun 24 18:45 test1.txt
+-rwxrwxr-x 1 mateusz mateusz 372 Jun 29 18:44 uniq.py
