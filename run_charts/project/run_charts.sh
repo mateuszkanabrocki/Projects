@@ -23,18 +23,28 @@
 # make txt data files with sticking bit - you can change it only through the script
 
 
-date=`date --iso-8601` # 2019-07-05
-last_saved_date="2019-07-04"
+save_exe_date () {
+file=check_execution.sh
+vi $file <<EndOfCommands
+/last_saved_date="
+!!echo 'last_saved_date="`date --iso-8601`"'
+
+:x
+EndOfCommands
+}
 
-if [ "$date" = "$last_saved_date" ]; then
-    echo "Equall!" # already executed today - exit script
-    exit 0
-else
-    echo "Not equal!"  # script wasn't executed today
-    last_saved_date=$date
-    echo "$last_saved_date"
-    bash get_data.sh $last_saved_date
+
+modify_script () {
+if [ $? -eq 0 ]; then  # if we've just saved new date - for today
+    save_exe_date
+    # edit stored value of last_saved_date in check_execution.sh
 fi
-echo "Done"
-python3.7 weight_chart.py
+}
 
+
+# check if script has already been executed today and we have the data
+bash check_execution.sh
+# modify last execution date - hardcoded in the script
+modify_script
+# run the chart
+python3.7 weight_chart.py  
