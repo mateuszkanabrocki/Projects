@@ -1,12 +1,11 @@
-#!/usr/bin/env python3.6
-
+#!/usr/bin/env python3.7
 import os
 from sys import exit
 try:
     import numpy
     import matplotlib.pyplot as plt
 except ModuleNotFoundError:
-    print("Use 'pip3 install numpy matplotlib' first.")
+    print("Use 'pip3 install numpy; pip3 install matplotlib' first.")
     exit(1)
 
 
@@ -37,11 +36,8 @@ def make_calculations(data):
 
 
 def plot(data):
-    print(data[1])
     tasks = data[0]
-    time = [date[0:5] for date in data[1]]
-    print(tasks)
-
+    time = [date[5:10] for date in data[1]]
 
     mean, std_dev = make_calculations(tasks)
 
