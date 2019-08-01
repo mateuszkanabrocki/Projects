@@ -55,12 +55,12 @@ def plot(data):
     ax.plot([mean for i in time], color='lightblue', linewidth=1)
     ax.plot([green_range for i in time], color='green', linewidth=1)
     ax.plot([red_range for i in time], color='red', linewidth=1)
-    ax.set(title="Weight change", xlabel="days", ylabel="Weight")
+    ax.set(title="Disk1 used", xlabel="days", ylabel="%")
     plt.show()
 
 
 def main():
-    data = get_data('weight_stat.txt')
+    data = get_data('disk1_stat.txt')
     plot(data)
 
 
